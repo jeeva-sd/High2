@@ -33,7 +33,7 @@ const Header = () => {
 
     return (
         <Fragment>
-            <nav className='z-10 flex justify-center bg-[hsla(0,0%,100%,.8)] backdrop-filter filter-[saturate(180%) blur(5px)]  dark:bg-gray-900 w-full shadow-sm shadow-[#eaeaea] fixed'>
+            <nav style={{ backdropFilter: 'saturate(180%) blur(5px)' }} className='fixed flex justify-center z-10 bg-[hsla(0,0%,100%,.8)] dark:bg-gray-900 w-full shadow-sm shadow-[#eaeaea]'>
                 <div className='flex flex-wrap items-center lg:w-10/12 md:w-10/12 w-full p-4'>
                     <div className='w-8/12'>
                         <button onClick={() => push('/')} className='flex items-center'>
@@ -68,9 +68,6 @@ const Header = () => {
                         </button>
                     </div>
                 </div>
-
-
-
             </nav>
 
             <SideOver isOpen={showNobileMenu} setIsOpen={(e: boolean) => setShowMobileMenu(e)} />
