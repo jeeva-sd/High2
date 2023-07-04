@@ -1,5 +1,7 @@
 import { AiFillYoutube, AiFillInstagram } from 'react-icons/ai';
 import { BsArrowRight } from 'react-icons/bs';
+import { IoIosCut } from 'react-icons/io';
+import NewsLetter from '~/widgets/NewsLetter';
 
 export default function Home() {
 
@@ -14,6 +16,12 @@ export default function Home() {
       name: 'Instagram Hashtag Generator',
       icon: <AiFillInstagram fontSize={30} color='violet' />,
       description: 'Our Instagram hashtag generator provides you with effective hashtags that help your content reach your targeted audience beyond your followers.',
+      available: true
+    },
+    {
+      name: 'Video and Audio Trimmer',
+      icon: <IoIosCut fontSize={30} color='blue' />,
+      description: 'Find the start and end time of the video or audio part you want to cut. Then enter the timecode of the required duration to get the selected area from the video or audio file.',
       available: true
     }
   ];
@@ -67,6 +75,10 @@ export default function Home() {
 
           </div>
         </div>
+      </section>
+
+      <section>
+        <NewsLetter />
       </section>
 
     </main>
