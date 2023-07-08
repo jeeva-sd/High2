@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { HiFolderRemove } from 'react-icons/hi';
-import { BiCopyAlt, BiSolidSelectMultiple } from 'react-icons/bi';
+import { BiSolidSelectMultiple } from 'react-icons/bi';
 import { MdClear } from 'react-icons/md';
 import { services } from '~/services';
 import { AiFillCopy } from 'react-icons/ai';

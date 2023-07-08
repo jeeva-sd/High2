@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import { Inter } from 'next/font/google';
 import 'tailwindcss/tailwind.css';
-import Header from '~/components/layout';
-import Footer from '~/components/layout/Footer';
 import './global.css';
 
+const Header = dynamic(() => import('~/components/layout'), { ssr: false });
+const Footer = dynamic(() => import('~/components/layout/Footer'), { ssr: false });
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode; }) {
   return (
-    <html lang="en" style={{ overflow: 'hidden' }}>
+    <html lang="en" style={{ overflowX: 'hidden' }}>
       <body className={`${inter.className}`}>
         <Header />
         <div className='lg:pt-20 md:pt-24 pt-28 bg-[url("/heroPattern.svg")]'>
