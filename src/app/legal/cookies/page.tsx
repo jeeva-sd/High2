@@ -75,7 +75,7 @@ const page = () => {
 
                     <h3 className="text-xl font-bold mb-2">Contact Us</h3>
                     <p className="mb-4">
-                        If you have any questions or concerns about our use of cookies or this Cookie Policy, <span onClick={() => push('/legal/contact-us')} className='text-indigo-600 underline cursor-pointer'>please contact us here.</span>
+                        If you have any questions or concerns about our use of cookies or this Cookie Policy, Please email us at <span className='text-lg font-bold'>styls360@gmail.com</span>
                     </p>
 
                     <h3 className="text-xl font-bold mb-2">Updates to this Cookie Policy</h3>

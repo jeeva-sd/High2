@@ -5,29 +5,29 @@ import { PiFireSimpleDuotone, PiTagSimpleDuotone } from 'react-icons/pi';
 import { LiaSlackHash } from 'react-icons/lia';
 import { AiFillTags } from 'react-icons/ai';
 import { BsClipboardDataFill } from 'react-icons/bs';
+import GetStarted from './GetStarted';
 
 const NewsLetter = dynamic(() => import('~/widgets'), { ssr: false });
 
 const ProTags = () => {
   return (
     <div>
-
-      <section className="bg-white dark:bg-gray-900 pt-10 lg:pb-2 md:pb-0 pb-10 bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/hero-pattern.svg')]">
+      <section className="flex dark:bg-gray-900">
         <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-          <a href="#" className="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700" role="alert">
+          <a href="/protags/youtube" className="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700" role="alert">
             <span className="text-xs bg-blue-600 rounded-full text-white px-4 py-1.5 mr-3">New</span> <span className="text-sm font-medium">YouTube Tag Generator is out! See what's new</span>
-            <svg className="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+            <svg className="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path></svg>
           </a>
-          <div className='w-full flex justify-center'><PiTagSimpleDuotone fontSize={150} /></div>
+          {/* <div className='w-full flex justify-center'><PiTagSimpleDuotone fontSize={150} /></div> */}
           <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"><span className='text-blue-600'>ProTags</span> - Tag Generator</h1>
           <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
             The powerful online tag generator that delivers relevant and effective keyword suggestions based on your title. And helps you to
             elevate your content and drive traffic. Make use of ProTags and get full potential of your SEO.
           </p>
 
-          <div className="px-4 mx-auto text-center md:max-w-screen-md lg:max-w-screen-xl lg:px-36 mt-12">
+          <div className="px-4 mx-auto text-center md:max-w-screen-md lg:max-w-screen-xl lg:px-36 mt-12 lg:flex md:flex hidden flex-wrap justify-center">
             <span className="font-semibold text-gray-400 uppercase">Powered by</span>
-            <div className="flex flex-wrap justify-center items-center mt-8 text-gray-500 sm:justify-between">
+            <div className="flex flex-wrap justify-center items-center mt-8 text-gray-500 sm:justify-between gap-10">
               <span className="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400 flex items-center cursor-default">
                 <PiFireSimpleDuotone fontSize={45} /> <span className='font-bold text-2xl ml-2'>Pro Algorithm</span>
               </span>
@@ -42,7 +42,7 @@ const ProTags = () => {
         </div>
       </section>
 
-      <section className='w-full flex flex-wrap justify-center bg-white dark:bg-gray-900 lg:px-20 md:px-10 px-5'>
+      <section className='w-full flex flex-wrap justify-center dark:bg-gray-900 lg:px-20 md:px-10 px-5 pt-16 pb-16'>
         <div className='flex flex-wrap lg:w-8/12 md:w-full w-full lg:pt-16 pb-8'>
           <span className="w-full text-center text-4xl font-extrabold leading-none text-gray-900 mb-4 md:text-4xl lg:text-4xl dark:text-white">
             What's in ProTags?
@@ -58,18 +58,14 @@ const ProTags = () => {
             <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
               Our YouTube tag generator is a valuable tool that helps you in finding relevant tags for your videos based on the given title. ProTags analyze your video's content and provide suggestions for tags that align with your video's topic, increasing the chances of it being discovered by the right audience.
             </p>
-            <button className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-              Get started
-              <svg className="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            </button>
+
+            <GetStarted path={'/protags/youtube'} disabled={false} />
           </div>
           <div className="hidden lg:mt-0 lg:col-span-5 lg:flex justify-center">
             <SiYoutubestudio fontSize={200} className='text-red-600 bg-gray-100 rounded-md p-5 shadow-inner' />
           </div>
         </div>
-      </section>
 
-      <section className="bg-white dark:bg-gray-900 lg:px-20 md:px-10 px-5">
         <div className="grid max-w-screen-xl px-4 pt-8 lg:pb-8 md:pb-8 pb-4 mx-auto lg:gap-8 xl:gap-0 lg:grid-cols-12">
 
           <div className="hidden lg:mt-0 lg:col-span-5 lg:flex justify-center">
@@ -81,15 +77,15 @@ const ProTags = () => {
             <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
               Instagram hashtags are a great way to get your content seen by more people. When you use relevant hashtags, your posts will show up in the search results for those hashtags, which means that people who are interested in those topics are more likely to see your content.
             </p>
-            <button disabled className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium disabled:bg-blue-400 text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-              Get started
-              <svg className="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            </button>
+
+            <GetStarted path={'/protags/instagram'} disabled={true} />
           </div>
         </div>
       </section>
 
-      <NewsLetter />
+      <div className='flex mt-16'>
+        <NewsLetter />
+      </div>
     </div>
   );
 };

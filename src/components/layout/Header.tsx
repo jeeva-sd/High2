@@ -17,8 +17,8 @@ const Header = () => {
 
     const navs: NavProps[] = [
         { title: 'Home', path: '/', selected: false },
-        { title: 'Tags', path: '/protags', selected: false },
-        { title: 'About', path: '/legal/about', selected: false }
+        { title: 'ProTags', path: '/protags', selected: false },
+        { title: 'YouTube tags', path: '/protags/youtube', selected: false }
     ];
 
     const sideBarNavs = useMemo(() => {

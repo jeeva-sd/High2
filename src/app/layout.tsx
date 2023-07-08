@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className}`}>
         <Header />
-        <div className='lg:pt-0 md:pt-0 pt-20'>
+        <div className='lg:pt-20 md:pt-24 pt-28 bg-[url("https://flowbite.s3.amazonaws.com/docs/jumbotron/hero-pattern.svg")]'>
           {children}
         </div>
         <Footer />
