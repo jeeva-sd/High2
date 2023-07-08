@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import 'tailwindcss/tailwind.css';
 import Header from '~/components/layout';
 import Footer from '~/components/layout/Footer';
+import './global.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode; }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ overflow: 'hidden' }}>
       <body className={`${inter.className}`}>
         <Header />
         <div className='lg:pt-20 md:pt-24 pt-28 bg-[url("/heroPattern.svg")]'>
