@@ -26,6 +26,8 @@ export default function Home() {
     }
   ];
 
+//  [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]
+
   return (
     <main className="flex flex-wrap items-center justify-center">
 
@@ -51,7 +53,7 @@ export default function Home() {
       </section>
 
       <section className="flex bg-white dark:bg-gray-900">
-        <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+        <div className="py-8 px-10 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
           <div className="max-w-screen-md mb-8 lg:mb-16">
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">What's in HighTool.net?
             </h2>
@@ -62,7 +64,7 @@ export default function Home() {
           <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
             {tools.map((tool: any, index: number) =>
               <div key={index}>
-                <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+                <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-slate-10 shadow-md border border-gray-200  lg:h-12 lg:w-12 dark:bg-primary-900">
                   {tool.icon}
                 </div>
                 <h3 className="mb-2 text-xl font-bold dark:text-white">{tool.name}

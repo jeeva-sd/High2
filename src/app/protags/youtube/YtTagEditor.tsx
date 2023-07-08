@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { CiSearch } from 'react-icons/ci';
 import { HiFolderRemove } from 'react-icons/hi';
 import { BiCopyAlt, BiSolidSelectMultiple } from 'react-icons/bi';
 import { MdClear } from 'react-icons/md';
 import { services } from '~/services';
 
-const Input = () => {
+const YtTagEditor = () => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [tags, setTags] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -27,7 +27,7 @@ const Input = () => {
         const { data }: any = await services.proTags.getYtTags({ title });
 
         if (Array.isArray(data)) {
-            setTags(data as any);
+            setTags(data.sort((a:string, b:string) => a.length - b.length) as any);
             setSelectedIndex([]);
         }
         else setTags([]);
@@ -37,24 +37,22 @@ const Input = () => {
 
     };
 
-    const handleSelect = (index: number) => {
+    const handleSelect = useCallback((index: number) => {
         const elementIndex: number = selectedIndex.indexOf(index);
 
         if (elementIndex >= 0) return setSelectedIndex((prev: number[]) => prev.filter((_e: any, i: number) => i !== elementIndex));
         else setSelectedIndex((prev: any) => [...prev, index]);
-    }
+    }, [selectedIndex])
 
-    const selectAll = () => {
-        setSelectedIndex(() => tags.map((_tag: any, i: number) => i))
-    }
+    const selectAll = useCallback(() => setSelectedIndex(() => tags.map((_tag: any, i: number) => i)), [tags]);
 
-    const clearAll = () => {
-        setSelectedIndex([])
-    }
+    const unSlectAll = useCallback(() => setSelectedIndex([]), []);
+
+    const clearTags = useCallback(() => setTags([]), []);
 
     return (
         <>
-            <section className='w-full flex justify-center'>
+            <section className="w-full flex justify-center">
                 <form className='lg:w-6/12 md:w-8/12 w-11/12' onSubmit={(e) => handleSearch(e)}>
                     <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                     <div className="relative">
@@ -79,31 +77,31 @@ const Input = () => {
                 </form>
             </section>
 
-            <section className='w-full flex justify-center'>
-                <div className='flex flex-wrap min-h-[400px] h-auto lg:w-6/12 md:w-8/12 w-11/12'>
-                    <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 min-h-6/12">
-                        <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
+            <section className='w-full flex justify-center min-h-[500px]'>
+                <div className='flex flex-wrap h-auto lg:w-6/12 md:w-8/12 w-11/12'>
+                    <div className="w-full mb-4 border border-gray-200 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 min-h-6/12">
+                        <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600 bg-gray-50 rounded-t-lg">
                             <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
                                 <div className="flex items-center space-x-1 sm:pr-4">
                                     <button onClick={() => selectAll()} type="button" className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                                         <BiSolidSelectMultiple className="w-5 h-5" title='Select All' />
                                         <span className="sr-only">Select All</span>
                                     </button>
-                                    <button type="button" className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <button onClick={() => unSlectAll()} type="button" className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                                         <HiFolderRemove title='Unselect All' fontSize={23} />
-                                        <span className="sr-only">Embed map</span>
+                                        <span className="sr-only">Unselect All</span>
                                     </button>
                                 </div>
                                 <div className="flex flex-wrap items-center space-x-1 sm:pl-4">
                                     <button onClick={() => handleCopy()} type="button" className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                                         <BiCopyAlt className="w-5 h-5" title='Copy Selected Tags' />
-                                        <span className="sr-only">Add list</span>
+                                        <span className="sr-only">Copy Tags</span>
                                     </button>
                                 </div>
                             </div>
-                            <button onClick={() => clearAll()} type="button" data-tooltip-target="tooltip-fullscreen" className="p-2 text-gray-500 rounded cursor-pointer sm:ml-auto hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <button onClick={() => clearTags()} type="button" data-tooltip-target="tooltip-fullscreen" className="p-2 text-gray-500 rounded cursor-pointer sm:ml-auto hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                                 <MdClear className="w-5 h-5" title='Clear Tags' />
-                                <span className="sr-only">Copy</span>
+                                <span className="sr-only">Clear Tags</span>
                             </button>
                             <div id="tooltip-fullscreen" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                                 Show full screen
@@ -111,13 +109,13 @@ const Input = () => {
                             </div>
                         </div>
 
-                        <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800 flex min-h-6/12">
+                        <div className="px-4 py-5 rounded-b-lg dark:bg-gray-800 flex">
                             <label htmlFor="editor" className="sr-only">Publish post</label>
-                            <div id="editor" className="flex flex-wrap items-center justify-center gap-2 w-full min-h-6/12 px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400">
+                            <div id="editor" className="flex flex-wrap items-center justify-center gap-2 py-5 w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400">
                                 {tags.map((tag: string, index: number) => {
                                     return (
                                         <div key={index} onClick={() => handleSelect(index)} className='p-2 bg-white rounded-md select-none cursor-pointer shadow-md border border-gray-200 w-auto flex gap-2 items-center'>
-                                            <input type='checkbox' className='h-4' checked={selectedIndex.includes(index)} />
+                                            <input type='checkbox' className='h-4' onChange={() => () => handleSelect(index)} checked={selectedIndex.includes(index)} />
                                             <div className='text-base'>{tag}</div>
                                         </div>
                                     )
@@ -133,4 +131,4 @@ const Input = () => {
     )
 }
 
-export default Input
+export default YtTagEditor
