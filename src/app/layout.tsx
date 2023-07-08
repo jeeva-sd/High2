@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     initialScale: 1,
     width: 'device-width'
   },
+  themeColor: '#000000',
   icons: [
     {
       url: '/fav/favicon-32x32.png',

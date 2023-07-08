@@ -42,7 +42,7 @@ const youtube = () => {
     return (
         <div className="flex flex-wrap justify-center gap-5">
 
-            <section className="flex flex-wrap justify-center gap-5 bg-white dark:bg-gray-900">
+            <section className="flex flex-wrap justify-center gap-5 dark:bg-gray-900">
                 <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:px-12">
                     <span className="inline-flex justify-between items-center py-1 px-4 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700" role="alert">
                         <span className="text-sm font-medium">Powered by ProTags</span>
