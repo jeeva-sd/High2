@@ -1,18 +1,48 @@
-import React from 'react';
-import { CiSearch } from 'react-icons/ci';
-import { HiFolderRemove } from 'react-icons/hi';
-import { BiCopyAlt, BiSolidSelectMultiple } from 'react-icons/bi';
-import { MdClear } from 'react-icons/md';
-import YtTagEditor from './YtTagEditor';
+import { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import { employYtt, faqListOne, faqListTwo } from './content';
-import { PiSealQuestionDuotone } from 'react-icons/pi';
-import NewsLetter from '~/widgets/NewsLetter';
+
+const YtTagEditor = dynamic(() => import('./YtTagEditor'), { ssr: false });
+const NewsLetter = dynamic(() => import('~/widgets'), { ssr: false });
+
+export const metadata: Metadata = {
+    alternates: {
+        canonical: 'https://www.hightool.net/protags/youtube'
+    },
+    title: 'YouTube Tag Generator',
+    description: "Start using our tag generator for YouTube and start getting more views for your YouTube videos!",
+    keywords: 'youtube tag generator, tag generator for youtube, tag generator yt, youtube title tag generator, ProTags, hightool',
+    applicationName: 'HighTool',
+    openGraph: {
+        type: 'website',
+        siteName: 'hightool.net',
+        title: 'YouTube Tag Generator',
+        images: '/fav/maskable_icon_x512.png',
+        url: 'https://www.hightool.net/protags/youtube',
+        description: 'Start using our tag generator for YouTube and start getting more views for your YouTube videos!',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'YouTube Tag Generator',
+        images: '/fav/maskable_icon_x512.png',
+        site: 'https://www.hightool.net/protags/youtube',
+        description: 'Start using our tag generator for YouTube and start getting more views for your YouTube videos!',
+    },
+    appleWebApp: {
+        capable: true,
+        title: 'hightool.net',
+        statusBarStyle: 'black',
+        startupImage: {
+            url: '/fav/maskable_icon_x512.png',
+        },
+    }
+};
 
 const youtube = () => {
     return (
         <div className="flex flex-wrap justify-center gap-5">
 
-            <section className="flex flex-wrap justify-center gap-5 bg-white dark:bg-gray-900 bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/hero-pattern.svg')]">
+            <section className="flex flex-wrap justify-center gap-5 bg-white dark:bg-gray-900">
                 <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:px-12">
                     <span className="inline-flex justify-between items-center py-1 px-4 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700" role="alert">
                         <span className="text-sm font-medium">Powered by ProTags</span>

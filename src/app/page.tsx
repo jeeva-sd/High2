@@ -1,11 +1,46 @@
-import { AiFillYoutube, AiFillInstagram } from 'react-icons/ai';
+import { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import { BsArrowRight } from 'react-icons/bs';
 import { IoIosArrowRoundForward, IoIosCut } from 'react-icons/io';
 import { MdMovieFilter } from 'react-icons/md';
 import { PiTagSimpleDuotone } from 'react-icons/pi';
-import NewsLetter from '~/widgets/NewsLetter';
 
-export default function Home() {
+const NewsLetter = dynamic(() => import('~/widgets'), { ssr: false });
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: 'https://www.hightool.net'
+  },
+  title: 'HighTool',
+  description: "We offer you a powerful tools that can help you grow your online presence, including a YouTube tag generator, Instagram hashtag generator, and video trimmer. These tools can help you save time and effort, so you can focus on creating great content.",
+  keywords: 'HighTool, youtube tag generator, tag generator for youtube, protags, instagram hashtag generator',
+  applicationName: 'HighTool',
+  openGraph: {
+    type: 'website',
+    siteName: 'hightool.net',
+    title: 'HighTool',
+    url: 'https://www.hightool.net',
+    images: '/fav/maskable_icon_x512.png',
+    description: 'We offer you a powerful tools that can help you grow your online presence, including a YouTube tag generator, Instagram hashtag generator, and video trimmer. These tools can help you save time and effort, so you can focus on creating great content.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: 'https://www.hightool.net',
+    title: 'HighTool',
+    images: '/fav/maskable_icon_x512.png',
+    description: 'We offer you a powerful tools that can help you grow your online presence, including a YouTube tag generator, Instagram hashtag generator, and video trimmer. These tools can help you save time and effort, so you can focus on creating great content.',
+  },
+  appleWebApp: {
+    capable: true,
+    title: 'hightool.net',
+    statusBarStyle: 'black',
+    startupImage: {
+      url: '/fav/maskable_icon_x512.png',
+    },
+  }
+};
+
+const Home = () => {
 
   const tools = [
     // {
@@ -45,8 +80,6 @@ export default function Home() {
     }
   ];
 
-  //  [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]
-
   return (
     <main className="flex flex-wrap items-center justify-center">
 
@@ -66,7 +99,7 @@ export default function Home() {
           <h1 className="w-full text-center text-4xl font-extrabold tracking-tight leading-none text-gray-900 mb-4 md:text-5xl lg:text-7xl dark:text-white">HighTool.net</h1>
 
           <p className="mb-8 lg:max-w-7xl md:max-w-7xl px-6 text-center text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-200">
-            We provide you with powerful tools such as YouTube tag generator, Instagram hashtag generator and so on which helps you to grow your online presence. Not only the tools to improve your online presence but also help you to make your task easier
+            We offer you a powerful tools that can help you grow your online presence, including a YouTube tag generator, Instagram hashtag generator, and video trimmer. These tools can help you save time and effort, so you can focus on creating great content.
           </p>
         </div>
       </section>
@@ -113,4 +146,6 @@ export default function Home() {
 
     </main>
   );
-}
+};
+
+export default Home;

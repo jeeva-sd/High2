@@ -1,4 +1,4 @@
-import React from 'react';
+import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import { SiYoutubestudio } from 'react-icons/si';
 import { PiFireSimpleDuotone, PiTagSimpleDuotone } from 'react-icons/pi';
@@ -8,6 +8,44 @@ import { BsClipboardDataFill } from 'react-icons/bs';
 import GetStarted from './GetStarted';
 
 const NewsLetter = dynamic(() => import('~/widgets'), { ssr: false });
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: 'https://www.hightool.net/protags'
+  },
+  title: 'ProTags - Tag Generator for YouTube and Instagram',
+  description: "ProTags offers YouTube tag generator and Instagram Hashtag generator that helps you create effective tags for your YouTube videos and Instagram posts.",
+  keywords: 'ProTags, protag, hightool, Tag generator, YouTube tags, Instagram hashtags, youtube tag generator, tag generator for youtube, Keyword research, Content marketing',
+  applicationName: 'HighTool',
+  verification: {
+    other: {
+      ['google-site-verification']: 'vH97xdO0p3T4lidmLNaW6w05iWQKG9mqo2ZjUc7Sd0w'
+    }
+  },
+  openGraph: {
+    type: 'website',
+    siteName: 'hightool.net',
+    title: 'ProTags - HighTool.net',
+    images: '/fav/maskable_icon_x512.png',
+    url: 'https://www.hightool.net/protags',
+    description: 'ProTags offers YouTube tag generator and Instagram Hashtag generator that helps you create effective tags for your YouTube videos and Instagram posts.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ProTags - HighTool.net',
+    images: '/fav/maskable_icon_x512.png',
+    site: 'https://www.hightool.net/protags',
+    description: 'ProTags offers YouTube tag generator and Instagram Hashtag generator that helps you create effective tags for your YouTube videos and Instagram posts.',
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black',
+    title: 'ProTags - HighTool.net',
+    startupImage: {
+      url: '/fav/maskable_icon_x512.png',
+    },
+  }
+};
 
 const ProTags = () => {
   return (

@@ -1,6 +1,41 @@
+import { Metadata } from 'next';
 import Wrapper from '../Wrapper';
 
+export const metadata: Metadata = {
+    alternates: {
+        canonical: 'https://www.hightool.net/legal/privacy'
+    },
+    title: 'Privacy Policy - HighTool.net',
+    description: "Privacy Policy page for hightool",
+    keywords: 'Privacy Policy, Hightool, protags, Privacy Policy',
+    applicationName: 'HighTool',
+    openGraph: {
+        type: 'website',
+        siteName: 'hightool.net',
+        title: 'Privacy Policy - HighTool.net',
+        images: '/fav/maskable_icon_x512.png',
+        url: 'https://www.hightool.net/legal/privacy',
+        description: 'Privacy Policy page for hightool',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Privacy Policy - HighTool.net',
+        images: '/fav/maskable_icon_x512.png',
+        site: 'https://www.hightool.net/legal/privacy',
+        description: 'Privacy Policy page for hightool',
+    },
+    appleWebApp: {
+        capable: true,
+        title: 'Privacy Policy - HighTool.net',
+        statusBarStyle: 'black',
+        startupImage: {
+            url: '/fav/maskable_icon_x512.png',
+        },
+    }
+};
+
 const page = () => {
+
     return (
         <Wrapper>
             <div className='w-full flex justify-center flex-wrap p-10'>
@@ -152,7 +187,6 @@ const page = () => {
                     <p>You may update, amend, or delete Your information at any time by signing in to Your Account, if you have one, and visiting the account settings section that allows you to manage Your personal information. You may also contact Us to request access to, correct, or delete any personal information that You have provided to Us.</p>
                     <p>Please note, however, that We may need to retain certain information when we have a legal obligation or lawful basis to do so.</p>
                 </div>
-
 
                 <div>
                     <h1 className='font-bold text-2xl text-center mt-10 mb-5'>Disclosure of Your Personal Data</h1>

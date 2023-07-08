@@ -1,4 +1,38 @@
+import { Metadata } from 'next';
 import Wrapper from '../Wrapper';
+
+export const metadata: Metadata = {
+    alternates: {
+        canonical: 'https://www.hightool.net/legal/terms'
+    },
+    title: 'Terms and Conditions - HighTool.net',
+    description: "Terms and Conditions page for hightool",
+    keywords: 'Terms and Conditions, Hightool, protags, Terms and Conditions',
+    applicationName: 'HighTool',
+    openGraph: {
+        type: 'website',
+        siteName: 'hightool.net',
+        title: 'Terms and Conditions - HighTool.net',
+        images: '/fav/maskable_icon_x512.png',
+        url: 'https://www.hightool.net/legal/terms',
+        description: 'Terms and Conditions page for hightool',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Terms and Conditions - HighTool.net',
+        images: '/fav/maskable_icon_x512.png',
+        site: 'https://www.hightool.net/legal/terms',
+        description: 'Terms and Conditions page for hightool',
+    },
+    appleWebApp: {
+        capable: true,
+        title: 'Terms and Conditions - HighTool.net',
+        statusBarStyle: 'black',
+        startupImage: {
+            url: '/fav/maskable_icon_x512.png',
+        },
+    }
+};
 
 const page = () => {
     return (

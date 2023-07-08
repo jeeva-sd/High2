@@ -1,11 +1,42 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { Metadata } from 'next';
 import Wrapper from '../Wrapper';
 
-const page = () => {
-    const { push } = useRouter();
+export const metadata: Metadata = {
+    alternates: {
+        canonical: 'https://www.hightool.net/legal/cookies'
+    },
+    title: 'Cookie Policy - HighTool.net',
+    description: "Cookie policy page for hightool",
+    keywords: 'Cookie policy, Hightool, protags, cookies',
+    applicationName: 'HighTool',
+    openGraph: {
+        type: 'website',
+        siteName: 'hightool.net',
+        title: 'Cookie Policy - HighTool.net',
+        images: '/fav/maskable_icon_x512.png',
+        url: 'https://www.hightool.net/legal/cookies',
+        description: 'Cookie policy page for hightool',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Cookie Policy - HighTool.net',
+        images: '/fav/maskable_icon_x512.png',
+        site: 'https://www.hightool.net/legal/cookies',
+        description: 'Cookie policy page for hightool',
+    },
+    appleWebApp: {
+        capable: true,
+        title: 'Cookie Policy - HighTool.net',
+        statusBarStyle: 'black',
+        startupImage: {
+            url: '/fav/maskable_icon_x512.png',
+        },
+    }
+};
 
+const page = () => {
     return (
         <Wrapper>
             <div className="py-8 overflow-hidden">
