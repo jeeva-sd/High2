@@ -74,7 +74,7 @@ const Home = () => {
           <a
             target='_blank'
             href="https://www.instagram.com/jeeva_b_/"
-            className="flex justify-center items-center py-1 px-4 pr-4 mb-7 text-sm text-cyan-600 bg-blue-5 border-dashed border border-cyan-600 rounded-full dark:bg-blue-900 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-800"
+            className="flex justify-center items-center py-1 px-4 pr-4 mb-7 text-sm text-cyan-600 bg-blue-5 border-dashed border border-cyan-600 rounded-full dark:bg-blue-900 dark:text-blue-300 hover:border-solid dark:hover:bg-blue-800"
           >
             <span className="text-sm font-medium mr-2"> Designed by Jee6 </span>
             <BsArrowRight />

@@ -28,9 +28,9 @@ const NewsLetter = () => {
         <section className='dark:bg-gray-900 w-full pb-24 px-5'>
             <div className='mx-auto max-w-screen-xl'>
                 <div className='mx-auto max-w-screen-md sm:text-center'>
-                    <h6 className='mb-2 text-2xl tracking-tight font-extrabold text-gray-900 sm:text-3xl dark:text-white'>
+                    <h4 className='mb-2 text-2xl tracking-tight font-extrabold text-gray-900 sm:text-3xl dark:text-white'>
                         Stay <span className='text-blue-600'>informed</span>
-                    </h6>
+                    </h4>
                     <ParaOne className='mx-auto mb-8 max-w-2xl'>
                         Stay up to date with the latest posts, announcements and exclusive discounts feel free to sign up with your email.
                     </ParaOne>

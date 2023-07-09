@@ -56,7 +56,7 @@ const YtTagEditor = () => {
         <>
             <section className="w-full relative justify-center lg:flex md:flex hidden">
                 <form className='xl:w-6/12 lg:w-7/12 md:w-11/12 w-11/12' onSubmit={(e) => handleSearch(e)}>
-                    <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                    <label htmlFor="large-device-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             {loading ?
@@ -71,7 +71,7 @@ const YtTagEditor = () => {
                         <input
                             type="search"
                             ref={inputRef}
-                            id="default-search"
+                            id="large-device-search"
                             placeholder="Enter your video title or keyword to get started"
                             className="lg:block md:block hidden w-full p-4 pl-12 text-sm text-gray-900 border border-gray-300 outline-none rounded-lg bg-gray-50 focus:border-black dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             required />
@@ -87,7 +87,7 @@ const YtTagEditor = () => {
 
             <section className="w-full flex justify-center lg:hidden md:hidden relative">
                 <form className='lg:w-7/12 md:w-11/12 w-11/12' onSubmit={(e) => handleSearch(e)}>
-                    <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                    <label htmlFor="small-device-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                     <div className="lg:hidden md:hidden relative">
                         <div className="absolute top-4 left-0 flex items-center pl-3 pointer-events-none">
 
@@ -103,7 +103,7 @@ const YtTagEditor = () => {
                         <input
                             type="search"
                             ref={inputRefSm}
-                            id="default-search"
+                            id="small-device-search"
                             placeholder="Enter your video title or keyword to get started"
                             className="block lg:hidden md:hidden w-full p-4 pl-12 text-sm text-gray-900 border border-gray-300 outline-none rounded-lg bg-gray-50 focus:border-black dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             required />
