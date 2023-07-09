@@ -6,6 +6,7 @@ import './global.css';
 
 const Header = dynamic(() => import('~/components/layout'), { ssr: false });
 const Footer = dynamic(() => import('~/components/layout/Footer'), { ssr: false });
+const NewsLetter = dynamic(() => import('~/widgets'), { ssr: false });
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -56,9 +57,14 @@ export default function RootLayout({ children }: { children: React.ReactNode; })
     <html lang="en" style={{ overflowX: 'hidden' }}>
       <body className={`${inter.className}`}>
         <Header />
+
         <div className='lg:pt-20 md:pt-24 pt-28 bg-[url("/heroPattern.svg")]'>
           {children}
+          <section className='mt-16'>
+            <NewsLetter />
+          </section>
         </div>
+
         <Footer />
       </body>
     </html>

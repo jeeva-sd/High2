@@ -2,14 +2,14 @@
 
 import React, { useCallback, useRef, useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
-import { HiFolderRemove } from 'react-icons/hi';
-import { BiSolidSelectMultiple } from 'react-icons/bi';
+import { LuCopyPlus, LuCopyMinus, LuCopyCheck } from 'react-icons/lu';
 import { MdClear } from 'react-icons/md';
 import { services } from '~/services';
-import { AiFillCopy } from 'react-icons/ai';
 
 const YtTagEditor = () => {
     const inputRef = useRef<HTMLInputElement>(null);
+    const inputRefSm = useRef<HTMLInputElement>(null);
+
     const [tags, setTags] = useState([]);
     const [loading, setLoading] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState<number[]>([]);
@@ -21,21 +21,22 @@ const YtTagEditor = () => {
 
     const handleSearch = async (e: any) => {
         e.preventDefault();
-        if (!inputRef.current || inputRef.current.value.trim().length === 0) return;
-        setLoading(true);
 
-        const title = inputRef.current.value;
-        const { data }: any = await services.proTags.getYtTags({ title });
+        if ((inputRef.current && inputRef.current.value.trim().length > 0) || (inputRefSm.current && inputRefSm.current.value.trim().length > 0)) {
+            setLoading(true);
 
-        if (Array.isArray(data)) {
-            setTags(data.sort((a: string, b: string) => a.length - b.length) as any);
+            const title = inputRef.current && inputRef.current.value ? inputRef.current.value : inputRefSm.current && inputRefSm.current.value ? inputRefSm.current.value : '';
+            const { data }: any = await services.proTags.getYtTags({ title });
+
+            if (Array.isArray(data)) {
+                setTags(data.sort((a: string, b: string) => a.length - b.length) as any);
+                setSelectedIndex([]);
+            }
+            else setTags([]);
+
             setSelectedIndex([]);
+            setLoading(false);
         }
-        else setTags([]);
-
-        setSelectedIndex([]);
-        setLoading(false);
-
     };
 
     const handleSelect = useCallback((index: number) => {
@@ -53,12 +54,11 @@ const YtTagEditor = () => {
 
     return (
         <>
-            <section className="w-full flex justify-center">
-                <form className='lg:w-7/12 md:w-11/12 w-11/12' onSubmit={(e) => handleSearch(e)}>
+            <section className="w-full relative justify-center lg:flex md:flex hidden">
+                <form className='xl:w-6/12 lg:w-7/12 md:w-11/12 w-11/12' onSubmit={(e) => handleSearch(e)}>
                     <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-
                             {loading ?
                                 <span className="relative flex h-3 w-3 ml-2">
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
@@ -73,7 +73,7 @@ const YtTagEditor = () => {
                             ref={inputRef}
                             id="default-search"
                             placeholder="Enter your video title or keyword to get started"
-                            className="block w-full p-4 pl-12 text-sm text-gray-900 border border-gray-300 outline-none rounded-lg bg-gray-50 focus:border-black dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="lg:block md:block hidden w-full p-4 pl-12 text-sm text-gray-900 border border-gray-300 outline-none rounded-lg bg-gray-50 focus:border-black dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             required />
                         <button
                             type="submit"
@@ -84,24 +84,57 @@ const YtTagEditor = () => {
                 </form>
             </section>
 
+
+            <section className="w-full flex justify-center lg:hidden md:hidden relative">
+                <form className='lg:w-7/12 md:w-11/12 w-11/12' onSubmit={(e) => handleSearch(e)}>
+                    <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                    <div className="lg:hidden md:hidden relative">
+                        <div className="absolute top-4 left-0 flex items-center pl-3 pointer-events-none">
+
+                            {loading ?
+                                <span className="relative flex h-3 w-3 ml-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                                </span>
+                                :
+                                <CiSearch fontSize={25} className='w-5 h-5 text-gray-500 dark:text-gray-400 ml-1' />}
+                        </div>
+
+                        <input
+                            type="search"
+                            ref={inputRefSm}
+                            id="default-search"
+                            placeholder="Enter your video title or keyword to get started"
+                            className="block lg:hidden md:hidden w-full p-4 pl-12 text-sm text-gray-900 border border-gray-300 outline-none rounded-lg bg-gray-50 focus:border-black dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            required />
+                        <button
+                            type="submit"
+                            className="text-white w-full mt-3 bg-black hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 uppercase">
+                            Search
+                        </button>
+                    </div>
+
+                </form>
+            </section>
+
             <section className='w-full flex justify-center min-h-[500px]'>
-                <div className='flex flex-wrap h-auto lg:w-7/12 md:w-11/12 w-11/12'>
+                <div className='flex flex-wrap h-auto xl:w-6/12 lg:w-7/12 md:w-11/12 w-11/12'>
                     <div className="w-full mb-4 border border-gray-200 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 min-h-6/12">
                         <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600 bg-gray-50 rounded-t-lg">
                             <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
                                 <div className="flex items-center space-x-1 sm:pr-4">
                                     <button onClick={() => selectAll()} type="button" className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                                        <BiSolidSelectMultiple className="w-5 h-5" title='Select All' />
+                                        <LuCopyPlus className="w-5 h-5" title='Select All' />
                                         <span className="sr-only">Select All</span>
                                     </button>
                                     <button onClick={() => unSlectAll()} type="button" className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                                        <HiFolderRemove title='Unselect All' fontSize={23} />
+                                        <LuCopyMinus title='Unselect All' fontSize={23} />
                                         <span className="sr-only">Unselect All</span>
                                     </button>
                                 </div>
                                 <div className="flex flex-wrap items-center space-x-1 sm:pl-4">
                                     <button onClick={() => handleCopy()} type="button" className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                                        <AiFillCopy className="w-5 h-5" title='Copy Selected Tags' />
+                                        <LuCopyCheck className="w-5 h-5" title='Copy Selected Tags' />
                                         <span className="sr-only">Copy Tags</span>
                                     </button>
                                 </div>
@@ -127,8 +160,6 @@ const YtTagEditor = () => {
                                         </div>
                                     );
                                 })}
-
-
                             </div>
                         </div>
                     </div>

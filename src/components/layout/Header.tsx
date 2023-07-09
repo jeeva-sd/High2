@@ -2,13 +2,11 @@
 
 import { useState, useMemo, Fragment } from 'react';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 import { useRouter, usePathname } from 'next/navigation';
 import { AiOutlineBars } from 'react-icons/ai';
+import Sideover from './Sideover';
 import hightoolLogo from '~/assets/images/logo/hightool_192.png';
 import { NavProps } from './types';
-
-const SideOver = dynamic(() => import('./Sideover'), { ssr: false });
 
 const Header = () => {
     const { push } = useRouter();
@@ -44,7 +42,7 @@ const Header = () => {
                                 draggable={false}
                                 className='h-8 w-8 mr-3'
                                 alt='Hightool Logo' />
-                            <span className='self-center text-2xl font-semibold whitespace-nowrap dark:text-white tracking-tight'>HighTool</span>
+                            <span className='self-center text-2xl font-bold whitespace-nowrap dark:text-white tracking-tighter'>HighTool</span>
                         </button>
                     </div>
 
@@ -70,7 +68,7 @@ const Header = () => {
                 </div>
             </nav>
 
-            <SideOver isOpen={showNobileMenu} setIsOpen={(e: boolean) => setShowMobileMenu(e)} />
+            <Sideover isOpen={showNobileMenu} setIsOpen={(e: boolean) => setShowMobileMenu(e)} />
         </Fragment>
     );
 };
