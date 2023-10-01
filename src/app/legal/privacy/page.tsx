@@ -6,7 +6,7 @@ export const metadata: Metadata = {
         canonical: 'https://www.hightool.net/legal/privacy'
     },
     title: 'Privacy Policy - HighTool.net',
-    description: "Privacy Policy page for hightool",
+    description: 'Privacy Policy page for hightool',
     keywords: 'Privacy Policy, Hightool, protags, Privacy Policy',
     applicationName: 'HighTool',
     openGraph: {

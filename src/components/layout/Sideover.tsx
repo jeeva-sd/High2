@@ -9,19 +9,19 @@ import { BiCookie, BiHash } from 'react-icons/bi';
 import { AiFillHome, AiFillTag, AiOutlineClose } from 'react-icons/ai';
 import { MobileNavProps } from './types';
 
+const navs: MobileNavProps[] = [
+    { title: 'Home', selected: false, icon: <AiFillHome />, path: '/' },
+    { title: 'ProTags', selected: false, icon: <BiHash />, path: '/protags' },
+    { title: 'YouTube Tag Generator', selected: false, icon: <AiFillTag />, path: '/protags/youtube' },
+    { title: 'Terms and Conditions', selected: false, icon: <FaNewspaper />, path: '/legal/terms' },
+    { title: 'Privacy Policy', selected: false, icon: <MdPrivacyTip />, path: '/legal/privacy' },
+    { title: 'Cookie Policy', selected: false, icon: <BiCookie />, path: '/legal/cookies' },
+];
+
 const SideOver = ({ isOpen, setIsOpen }: any) => {
     const { push } = useRouter();
     const pathname = usePathname();
     const open = useMemo(() => isOpen, [isOpen]);
-
-    const navs: MobileNavProps[] = [
-        { title: 'Home', selected: false, icon: <AiFillHome />, path: '/' },
-        { title: 'ProTags', selected: false, icon: <BiHash />, path: '/protags' },
-        { title: 'YouTube Tag Generator', selected: false, icon: <AiFillTag />, path: '/protags/youtube' },
-        { title: 'Terms and Conditions', selected: false, icon: <FaNewspaper />, path: '/legal/terms' },
-        { title: 'Privacy Policy', selected: false, icon: <MdPrivacyTip />, path: '/legal/privacy' },
-        { title: 'Cookie Policy', selected: false, icon: <BiCookie />, path: '/legal/cookies' },
-    ];
 
     const sideBarNavs = useMemo(() => {
         return navs.map((nav: MobileNavProps) => {

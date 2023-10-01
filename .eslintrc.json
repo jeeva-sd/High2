@@ -8,19 +8,20 @@
       4
     ],
     "semi": [
-      "warning",
+      2,
       "always"
     ],
     "quotes": [
-      "warning",
+      2,
       "single"
     ],
     "no-multiple-empty-lines": [
-      "warning",
+      2,
       {
         "max": 2
       }
     ],
-    "no-trailing-spaces": "error"
+    "no-trailing-spaces": "error",
+    "react/no-unescaped-entities": "off"
   }
 }

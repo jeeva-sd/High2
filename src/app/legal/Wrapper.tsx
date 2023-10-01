@@ -1,8 +1,5 @@
-import Image from 'next/image';
-import beam from '~/assets/images/bg/beams.jpg';
-import hero from '~/assets/images/bg/heroPattern.svg';
-
 const Wrapper = ({ children }: React.PropsWithChildren) => {
+
     return (
         <div className='py-28 lg:px-10 md:px-10 px-2'>
             <div className='flex flex-wrap justify-center gap-5'>

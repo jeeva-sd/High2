@@ -6,7 +6,7 @@ export const metadata: Metadata = {
         canonical: 'https://www.hightool.net/legal/terms'
     },
     title: 'Terms and Conditions - HighTool.net',
-    description: "Terms and Conditions page for hightool",
+    description: 'Terms and Conditions page for hightool',
     keywords: 'Terms and Conditions, Hightool, protags, Terms and Conditions',
     applicationName: 'HighTool',
     openGraph: {

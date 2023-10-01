@@ -8,16 +8,16 @@ import Sideover from './Sideover';
 import hightoolLogo from '~/assets/images/logo/hightool_192.png';
 import { NavProps } from './types';
 
+const navs: NavProps[] = [
+    { title: 'Home', path: '/', selected: false },
+    { title: 'ProTags', path: '/protags', selected: false },
+    { title: 'YouTube tags', path: '/protags/youtube', selected: false }
+];
+
 const Header = () => {
     const { push } = useRouter();
     const pathname = usePathname();
     const [showNobileMenu, setShowMobileMenu] = useState<boolean>(false);
-
-    const navs: NavProps[] = [
-        { title: 'Home', path: '/', selected: false },
-        { title: 'ProTags', path: '/protags', selected: false },
-        { title: 'YouTube tags', path: '/protags/youtube', selected: false }
-    ];
 
     const sideBarNavs = useMemo(() => {
         return navs.map((nav: NavProps) => {

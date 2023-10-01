@@ -7,7 +7,7 @@ export const metadata: Metadata = {
         canonical: 'https://www.hightool.net/protags/youtube'
     },
     title: 'YouTube Tag Generator',
-    description: "Start using our tag generator for YouTube and start getting more views for your YouTube videos!",
+    description: 'Start using our tag generator for YouTube and start getting more views for your YouTube videos!',
     keywords: 'youtube tag generator, tag generator for youtube, tag generator yt, youtube title tag generator, ProTags, hightool',
     applicationName: 'HighTool',
     openGraph: {
@@ -96,7 +96,7 @@ const YouTubeTags = () => {
                         <div>
                             {faqListOne.map((faq: any, index: number) => {
                                 return (
-                                    <div className="mb-10 border p-5 rounded-md bg-white">
+                                    <div className="mb-10 border p-5 rounded-md bg-white" key={index}>
                                         <h3 className="flex items-center mb-4 text-lg tracking-tighter font-bold text-gray-900 dark:text-white">
                                             {faq.qn}
                                         </h3>
@@ -110,7 +110,7 @@ const YouTubeTags = () => {
                         <div>
                             {faqListTwo.map((faq: any, index: number) => {
                                 return (
-                                    <div className="mb-10 border p-5 rounded-md bg-white">
+                                    <div className="mb-10 border p-5 rounded-md bg-white" key={index}>
                                         <h3 className="flex items-center mb-4 text-lg tracking-tighter font-bold text-gray-900 dark:text-white">
                                             {faq.qn}
                                         </h3>
