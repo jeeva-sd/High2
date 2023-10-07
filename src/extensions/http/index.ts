@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, CancelTokenSource } from 'axios';
 
-class WebAPI {
+class Http {
     private instance: AxiosInstance;
     private pendingRequests: Map<string, CancelTokenSource>;
 
@@ -11,6 +11,10 @@ class WebAPI {
         });
         this.pendingRequests = new Map<string, CancelTokenSource>();
         this.setupInterceptors();
+    }
+
+    protected setAuthToken(token: string) {
+        this.instance.defaults.headers.common['x-key'] = token;
     }
 
     private addPendingRequest(config: any): void {
@@ -61,4 +65,4 @@ class WebAPI {
     }
 }
 
-export default WebAPI;
+export default Http;

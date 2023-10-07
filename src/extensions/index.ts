@@ -1,7 +1,7 @@
 // HTTP
-import WebAPI from './webAPI';
+import Http from './http';
 
-const apiInstance1 = new WebAPI('https://tags.jee6.in');
+const apiInstance1 = new Http('https://tags.jee6.in');
 export const http = apiInstance1.getInstance();
 
 
