@@ -3,15 +3,15 @@
 import { useState, useMemo, Fragment } from 'react';
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
-import { AiOutlineBars } from 'react-icons/ai';
+import { AiOutlineBars, AiOutlineExperiment } from 'react-icons/ai';
 import Sideover from './Sideover';
 import hightoolLogo from '~/assets/images/logo/hightool_192.png';
 import { NavProps } from './types';
 
 const navs: NavProps[] = [
-    { title: 'Home', path: '/', selected: false },
-    { title: 'Recorder', path: '/screen-recorder', selected: false },
-    { title: 'Tag Generator', path: '/protags/youtube', selected: false }
+    { title: 'Home', path: '/', selected: false, beta: false },
+    { title: 'Recorder', path: '/screen-recorder', selected: false, beta: true },
+    { title: 'Tag Generator', path: '/protags/youtube', selected: false, beta: false }
 ];
 
 const Header = () => {
