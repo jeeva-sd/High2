@@ -19,6 +19,7 @@ export const metadata: Metadata = {
             ['google-site-verification']: 'vH97xdO0p3T4lidmLNaW6w05iWQKG9mqo2ZjUc7Sd0w'
         }
     },
+    robots: 'index, follow',
     openGraph: {
         type: 'website',
         siteName: 'hightool.net',

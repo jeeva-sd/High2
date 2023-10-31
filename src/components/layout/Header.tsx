@@ -10,8 +10,8 @@ import { NavProps } from './types';
 
 const navs: NavProps[] = [
     { title: 'Home', path: '/', selected: false },
-    { title: 'ProTags', path: '/protags', selected: false },
-    { title: 'YouTube tags', path: '/protags/youtube', selected: false }
+    { title: 'Recorder', path: '/screen-recorder', selected: false },
+    { title: 'Tag Generator', path: '/protags/youtube', selected: false }
 ];
 
 const Header = () => {

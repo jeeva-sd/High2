@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { BsArrowRight } from 'react-icons/bs';
+import { BsArrowRight, BsRecordCircle } from 'react-icons/bs';
 import { IoIosArrowRoundForward, IoIosCut } from 'react-icons/io';
 import { MdMovieFilter } from 'react-icons/md';
 import { PiTagSimpleDuotone } from 'react-icons/pi';
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     description: 'We offer you a powerful tools that can help you grow your online presence, including a YouTube tag generator, Instagram hashtag generator, and video trimmer. These tools can help you save time and effort, so you can focus on creating great content.',
     keywords: 'HighTool, youtube tag generator, tag generator for youtube, protags, instagram hashtag generator',
     applicationName: 'HighTool',
+    robots: 'index, follow',
     openGraph: {
         type: 'website',
         siteName: 'hightool.net',
@@ -43,11 +44,19 @@ const Home = () => {
     const tools = [
         {
             name: 'ProTags',
-            icon: <PiTagSimpleDuotone fontSize={30} color='red' />,
+            icon: <PiTagSimpleDuotone fontSize={30} color='blue' />,
             description: 'The tag generator provides you with effective tags based on your title and helps your content to be more recommended on your platform beyond your followers.',
             available: true,
             path: '/protags',
-            position: 'lg:drop-shadow-md shadow-none'
+            position: 'lg:shadow-sm shadow-none hover:shadow transition-shadow'
+        },
+        {
+            name: 'Screen Recorder',
+            icon: <BsRecordCircle fontSize={30} color='red' />,
+            description: 'you to record your screen and audio without having to download or install any software. Perfect for students, teachers, businesses, and more.',
+            available: true,
+            path: '/screen-recorder',
+            position: 'lg:shadow-sm shadow-none hover:shadow transition-shadow'
         },
         {
             name: 'Media Filter\'s',
@@ -55,7 +64,7 @@ const Home = () => {
             description: 'This tool provide you with the different kind of filters available for your audio and video files. By using this tool you can make your raw footages to the next level.',
             available: false,
             path: '/protags',
-            position: 'lg:origin-top lg:rotate-12 lg:translate-x-12 md:origin-top md:rotate-12 md:translate-x-12 origin-center rotate-0 translate-0'
+            position: 'lg:shadow-sm shadow-none hover:shadow transition-shadow'
         },
         {
             name: 'Video and Audio Trimmer',
@@ -63,7 +72,7 @@ const Home = () => {
             description: 'Find the start and end time of the video or audio part you want to cut. Then enter the timecode of the required duration to get the selected area from the video or audio file.',
             available: false,
             path: '/protags',
-            position: 'lg:origin-top-right lg:-rotate-12 lg:-translate-y-12 lg:-translate-x-12 lg:shadow-md origin-center rotate-0 translate-y-0 translate-x-0 shadow-none'
+            position: 'lg:shadow-sm shadow-none hover:shadow transition-shadow'
         }
     ];
 
@@ -82,8 +91,8 @@ const Home = () => {
 
                     <HeadOne>HighTool.net</HeadOne>
                     <ParaOne className="mb-8 lg:max-w-7xl md:max-w-7xl px-6 text-center sm:px-16 lg:px-48">
-						We offer you a powerful tools that can help you grow your online presence, including a YouTube tag generator, Instagram hashtag generator, and video trimmer.
-						These tools can help you save time and effort, so you can focus on creating great content.
+                        We offer you a powerful tools that can help you grow your online presence, including a YouTube tag generator, Instagram hashtag generator, and video trimmer.
+                        These tools can help you save time and effort, so you can focus on creating great content.
                     </ParaOne>
                 </div>
             </section>
@@ -92,10 +101,10 @@ const Home = () => {
                 <div className="py-8 px-5 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
                     <div className="max-w-screen-md mb-8 lg:mb-16">
                         <h2 className="mb-4 lg:text-3xl md:text-3xl text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-							What&apos;s in <span className='text-blue-600'>HighTool</span>.net?
+                            What&apos;s in <span className='text-blue-600'>HighTool</span>.net?
                         </h2>
                         <ParaOne className="lg:text-start md:text-start text-start">
-							Here are the tools you need to make your life easier, more efficient, and more enjoyable on a daily basis.
+                            Here are the tools you need to make your life easier, more efficient, and more enjoyable on a daily basis.
                         </ParaOne>
                     </div>
 
@@ -110,11 +119,11 @@ const Home = () => {
                                 <div className='mt-4'>
                                     {tool.available ?
                                         <a href={tool.path} className='text-cyan-600 w-fit flex items-center text-sm tracking-tight mt-2 hover:underline cursor-pointer'>
-											Get Started <IoIosArrowRoundForward className='ml-1' />
+                                            Get Started <IoIosArrowRoundForward className='ml-1' />
                                         </a>
                                         :
                                         <span className='text-gray-500 w-fit flex items-center text-sm tracking-tight mt-2 hover:underline cursor-not-allowed'>
-											Coming soon
+                                            Coming soon
                                         </span>}
                                 </div>
                             </div>
