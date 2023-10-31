@@ -3,7 +3,7 @@
 import { useState, useMemo, Fragment } from 'react';
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
-import { AiOutlineBars, AiOutlineExperiment } from 'react-icons/ai';
+import { AiOutlineBars } from 'react-icons/ai';
 import Sideover from './Sideover';
 import hightoolLogo from '~/assets/images/logo/hightool_192.png';
 import { NavProps } from './types';

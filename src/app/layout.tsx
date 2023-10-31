@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import { Inter } from 'next/font/google';
+import Header from '~/components/layout/Header';
 import 'tailwindcss/tailwind.css';
 import './global.css';
 
-const Header = dynamic(() => import('~/components/layout'), { ssr: false });
 const Footer = dynamic(() => import('~/components/layout/Footer'), { ssr: false });
 const NewsLetter = dynamic(() => import('~/widgets'), { ssr: false });
 const inter = Inter({ subsets: ['latin'] });
