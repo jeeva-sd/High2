@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { RadioGroup } from '@headlessui/react';
 
 export default function RecordController({ options, onChange }: any) {
-    const [selected, setSelected] = useState(options[0]);
+    const [selected, setSelected] = useState(options[1]);
 
     useEffect(() => {
         onChange(selected);

@@ -43,7 +43,7 @@ const Home = () => {
 
     const tools = [
         {
-            name: 'ProTags',
+            name: 'Keyword Generator',
             icon: <PiTagSimpleDuotone fontSize={30} color='blue' />,
             description: 'The tag generator provides you with effective tags based on your title and helps your content to be more recommended on your platform beyond your followers.',
             available: true,
@@ -53,7 +53,7 @@ const Home = () => {
         {
             name: 'Screen Recorder',
             icon: <BsRecordCircle fontSize={30} color='red' />,
-            description: 'you to record your screen and audio without having to download or install any software. Perfect for students, teachers, businesses, and more.',
+            description: 'Record your screen and audio without having to download or install any software. Perfect for students, teachers, businesses, and more.',
             available: true,
             path: '/screen-recorder',
             position: 'lg:shadow-sm shadow-none hover:shadow transition-shadow'

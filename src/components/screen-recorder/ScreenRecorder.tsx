@@ -157,7 +157,7 @@ const ScreenRecorder = () => {
                         ) : (
                             <button
                                 onClick={stopRecording}
-                                className="border transition-colors border-red-600 p-2 bg-red-600 rounded-md text-white w-full hover:bg-transparent hover:text-red-600 focus:bg-red-500 mt-4"
+                                className="border transition-colors border-red-600 p-2 bg-red-600 rounded-md text-white w-full hover:bg-transparent focus:text-white hover:text-red-600 focus:bg-red-500 mt-4"
                             >
                                 Stop Recording
                             </button>
