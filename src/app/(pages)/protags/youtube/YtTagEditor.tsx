@@ -5,36 +5,40 @@ import { CiSearch } from 'react-icons/ci';
 import { LuCopyPlus, LuCopyMinus, LuCopyCheck } from 'react-icons/lu';
 import { MdClear } from 'react-icons/md';
 import { services } from '~/services';
+import PopOver from '~/widgets/PopOver';
 
 const YtTagEditor = () => {
     const inputRef = useRef<HTMLInputElement>(null);
     const inputRefSm = useRef<HTMLInputElement>(null);
 
-    const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
+    const [isCopied, setIsCopied] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState<number[]>([]);
 
     const handleCopy = () => {
         const selectedTags: any = tags.filter((_tags: any, index: number) => selectedIndex.includes(index));
         navigator.clipboard.writeText(selectedTags);
+        setIsCopied(true);
     };
 
     const handleSearch = async (e: any) => {
         e.preventDefault();
+        const isInputValid = (inputRef.current?.value?.trim() || inputRefSm.current?.value?.trim()) !== '';
 
-        if ((inputRef.current && inputRef.current.value.trim().length > 0) || (inputRefSm.current && inputRefSm.current.value.trim().length > 0)) {
+        if (isInputValid) {
             setLoading(true);
 
-            const title = inputRef.current && inputRef.current.value ? inputRef.current.value : inputRefSm.current && inputRefSm.current.value ? inputRefSm.current.value : '';
+            const title = (inputRef.current?.value || inputRefSm.current?.value) || '';
             const { data }: any = await services.proTags.getYtTags({ title });
+            const tags: string[] = data.data.slice(0, 20);
 
-            if (Array.isArray(data)) {
-                setTags(data.sort((a: string, b: string) => a.length - b.length) as any);
-                setSelectedIndex([]);
+            if (Array.isArray(tags)) {
+                setTags(tags);
+                setSelectedIndex(() => tags.map((_tag: any, i: number) => i));
             }
             else setTags([]);
 
-            setSelectedIndex([]);
             setLoading(false);
         }
     };
@@ -137,6 +141,7 @@ const YtTagEditor = () => {
                                         <LuCopyCheck className="w-5 h-5" title='Copy Selected Tags' />
                                         <span className="sr-only">Copy Tags</span>
                                     </button>
+                                    <PopOver setShow={setIsCopied} show={isCopied} text={tags?.length > 0 ? 'Tags Copied!' : 'Tag not found'} />
                                 </div>
                             </div>
                             <button onClick={() => clearTags()} type="button" data-tooltip-target="tooltip-fullscreen" className="p-2 text-gray-500 rounded cursor-pointer sm:ml-auto hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
@@ -150,7 +155,7 @@ const YtTagEditor = () => {
                         </div>
 
                         <div className="px-4 py-5 rounded-b-lg dark:bg-gray-800 flex">
-                            <label htmlFor="editor" className="sr-only">Publish post</label>
+                            <label htmlFor="editor" className="sr-only">Keywords</label>
                             <div id="editor" className="flex flex-wrap items-center justify-center gap-2 py-5 w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400">
                                 {tags.map((tag: string, index: number) => {
                                     return (
@@ -165,6 +170,8 @@ const YtTagEditor = () => {
                     </div>
                 </div>
             </section>
+
+
         </>
     );
 };

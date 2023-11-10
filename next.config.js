@@ -6,7 +6,10 @@ const withPWA = require('next-pwa')({
 });
 
 module.exports = withPWA({
-    images: {
-        domains: ['localhost']
+    devIndicators: {
+        buildActivityPosition: 'top-right',
+    },
+    eslint: {
+        ignoreDuringBuilds: true,
     }
 });

@@ -10,11 +10,6 @@ const NewsLetter = dynamic(() => import('~/widgets'), { ssr: false });
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-    viewport: {
-        initialScale: 1,
-        width: 'device-width'
-    },
-    themeColor: '#000000',
     icons: [
         {
             url: '/fav/favicon-32x32.png',

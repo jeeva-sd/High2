@@ -1,0 +1,55 @@
+function tfIdf(documents) {
+  // Initialize empty objects for document counts, term frequency (TF), and inverse document frequency (IDF)
+  const docCounts = {};
+  const tf = {};
+  const idf = {};
+ 
+  // Calculate document counts and term frequency (TF) for each document
+  for (const docId of Object.keys(documents)) {
+    const doc = documents[docId].split(" ");
+    const wordCounts = {};
+    for (const word of doc) {
+      if (!wordCounts[word]) {
+        wordCounts[word] = 0;
+      }
+      wordCounts[word]++;
+    }
+ 
+    const tfDoc = {};
+    for (const word of Object.keys(wordCounts)) {
+      if (!docCounts[word]) {
+        docCounts[word] = 0;
+      }
+      docCounts[word]++;
+      tfDoc[word] = wordCounts[word] / doc.length;
+    }
+    tf[docId] = tfDoc;
+  }
+ 
+  // Calculate inverse document frequency (IDF) for each word
+  for (const word of Object.keys(docCounts)) {
+    idf[word] = Math.log10(Object.keys(documents).length / docCounts[word]);
+  }
+ 
+  // Calculate TF-IDF scores for each document and word
+  const tfidf = {};
+  for (const docId in tf) {
+    const docTf = tf[docId];
+    tfidf[docId] = {};
+    for (const word in docTf) {
+      tfidf[docId][word] = docTf[word] * idf[word];
+    }
+  }
+ 
+  return tfidf;
+}
+ 
+// Example usage
+const documents = {
+  doc1: "how to get one million views on YouTube",
+  doc2: "how to create a viral video that will make you famous",
+  doc3: "how to grow your social media following fast and easy"
+};
+ 
+const tfidfScores = tfIdf(documents);
+console.log(tfidfScores);

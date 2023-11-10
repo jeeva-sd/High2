@@ -1,67 +1,72 @@
-import axios, { AxiosInstance, CancelTokenSource } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 class Http {
-    private instance: AxiosInstance;
-    private pendingRequests: Map<string, CancelTokenSource>;
+    private instance: any;
+    private pendingRequests: Map<string, any>;
 
-    constructor(baseURL: string) {
+    constructor(baseURL: string, timeout: number = 20000) {
         this.instance = axios.create({
             baseURL,
-            timeout: 20000,
+            timeout,
         });
-        this.pendingRequests = new Map<string, CancelTokenSource>();
-        this.setupInterceptors();
+
+        this.pendingRequests = new Map();
     }
 
-    protected setAuthToken(token: string) {
+    setAuthToken(token: string): void {
         this.instance.defaults.headers.common['x-key'] = token;
     }
 
-    private addPendingRequest(config: any): void {
-        const url = `${config.url}&${config.method}`;
+    cancelPendingRequests(config: AxiosRequestConfig): void {
+        const requestKey = `${config.url}-${config.method}`;
+
+        if (this.pendingRequests.has(requestKey)) {
+            const cancelToken = this.pendingRequests.get(requestKey);
+            cancelToken.cancel('Request cancelled due to duplication');
+        }
+        this.pendingRequests.delete(requestKey);
+    }
+
+    request(config: AxiosRequestConfig): Promise<AxiosResponse> {
+        this.cancelPendingRequests(config);
+
         const source = axios.CancelToken.source();
+        // Generate a unique key for each request based on the URL, HTTP method, and payload
+        const requestKey = `${config.url}-${config.method}-${JSON.stringify(config.data)}`;
+        this.pendingRequests.set(requestKey, source);
 
-        if (!this.pendingRequests.has(url)) {
-            this.pendingRequests.set(url, source);
-        }
+        config.cancelToken = source.token;
+        return this.instance.request(config)
+            .then((response: AxiosResponse) => {
+                this.pendingRequests.delete(requestKey);
+                return response;
+            })
+            .catch((error: any) => {
+                if (axios.isCancel(error)) {
+                    console.log('Request cancelled:', error.message);
+                }
+                throw error;
+            });
     }
 
-    private removePendingRequest(config: any): void {
-        const url = `${config.url}&${config.method}`;
-
-        if (this.pendingRequests.has(url)) {
-            const source = this.pendingRequests.get(url);
-            source?.cancel();
-            this.pendingRequests.delete(url);
-        }
+    get(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse> {
+        return this.request({ ...config, method: 'get', url: url });
     }
 
-    private setupInterceptors(): void {
-        this.instance.interceptors.request.use(
-            (config: any) => {
-                this.removePendingRequest(config);
-                this.addPendingRequest(config);
-                return config;
-            },
-            (error: any) => {
-                return Promise.reject(error);
-            }
-        );
-
-        this.instance.interceptors.response.use(
-            (response: any) => {
-                this.removePendingRequest(response.config);
-                return response.data;
-            },
-            (error: any) => {
-                this.removePendingRequest(error.config);
-                return Promise.reject(error);
-            }
-        );
+    post(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
+        return this.request({ ...config, method: 'post', url, data });
     }
 
-    public getInstance(): AxiosInstance {
-        return this.instance;
+    put(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
+        return this.request({ ...config, method: 'put', url, data });
+    }
+
+    patch(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
+        return this.request({ ...config, method: 'patch', url, data });
+    }
+
+    delete(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
+        return this.request({ ...config, method: 'delete', url, data });
     }
 }
 

@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     description: 'Start using our tag generator for YouTube and start getting more views for your YouTube videos!',
     keywords: 'youtube tag generator, tag generator for youtube, tag generator yt, youtube title tag generator, ProTags, hightool',
     applicationName: 'HighTool',
+    metadataBase: new URL('https://www.hightool.net'),
     openGraph: {
         type: 'website',
         siteName: 'hightool.net',
@@ -74,7 +75,7 @@ const YouTubeTags = () => {
                     <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-full">
                         <dl className="grid max-w-xl grid-cols-1 gap-y-10 gap-x-8 lg:max-w-full lg:grid-cols-3 lg:gap-y-16 mx-auto">
                             {employYtt.map((feature: any, index: number) => (
-                                <div key={index} className="relative shadow-md border border-t-1 border-gray-200 bg-white rounded-md p-5">
+                                <div key={feature.title} className="relative shadow-md border border-t-1 border-gray-200 bg-white rounded-md p-5">
                                     <dt className="text-base font-semibold leading-7 text-gray-900">
                                         <div className={`absolute top-[-20px] left-[-20px] flex h-10 w-10 items-center justify-center rounded-lg  shadow-lg ${index === 1 ? 'bg-blue-600' : 'bg-black'}`}>
                                             {feature.icon}
@@ -94,9 +95,9 @@ const YouTubeTags = () => {
                     <h2 className="lg:mb-8 md:mb-8 mb-4 lg:text-4xl md:text-4xl text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">Frequently asked <span className='text-red-600'>questions</span></h2>
                     <div className="grid pt-8 text-left border-t border-gray-200 md:gap-16 dark:border-gray-700 md:grid-cols-2">
                         <div>
-                            {faqListOne.map((faq: any, index: number) => {
+                            {faqListOne.map((faq: any) => {
                                 return (
-                                    <div className="mb-10 border p-5 rounded-md bg-white" key={index}>
+                                    <div className="mb-10 border p-5 rounded-md bg-white" key={faq.qn}>
                                         <h3 className="flex items-center mb-4 text-lg tracking-tighter font-bold text-gray-900 dark:text-white">
                                             {faq.qn}
                                         </h3>
@@ -108,9 +109,9 @@ const YouTubeTags = () => {
                             })}
                         </div>
                         <div>
-                            {faqListTwo.map((faq: any, index: number) => {
+                            {faqListTwo.map((faq: any) => {
                                 return (
-                                    <div className="mb-10 border p-5 rounded-md bg-white" key={index}>
+                                    <div className="mb-10 border p-5 rounded-md bg-white" key={faq.qn}>
                                         <h3 className="flex items-center mb-4 text-lg tracking-tighter font-bold text-gray-900 dark:text-white">
                                             {faq.qn}
                                         </h3>

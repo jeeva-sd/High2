@@ -20,6 +20,7 @@ export const metadata: Metadata = {
         }
     },
     robots: 'index, follow',
+    metadataBase: new URL('https://www.hightool.net'),
     openGraph: {
         type: 'website',
         siteName: 'hightool.net',

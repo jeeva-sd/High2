@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     keywords: 'HighTool, youtube tag generator, tag generator for youtube, protags, instagram hashtag generator',
     applicationName: 'HighTool',
     robots: 'index, follow',
+    metadataBase: new URL('https://www.hightool.net'),
     openGraph: {
         type: 'website',
         siteName: 'hightool.net',
@@ -109,8 +110,8 @@ const Home = () => {
                     </div>
 
                     <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
-                        {tools.map((tool: any, index: number) =>
-                            <div key={index} className={`lg:bg-white lg:p-5 lg:border lg:border-gray-200 lg:rounded-md ${tool.position}`}>
+                        {tools.map((tool: any) =>
+                            <div key={tool.name} className={`lg:bg-white lg:p-5 lg:border lg:border-gray-200 lg:rounded-md ${tool.position}`}>
                                 <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-slate-10 shadow-md border border-gray-200  lg:h-12 lg:w-12 dark:bg-primary-900">
                                     {tool.icon}
                                 </div>
