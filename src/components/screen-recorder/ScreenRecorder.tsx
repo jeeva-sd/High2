@@ -2,6 +2,7 @@
 
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { Switch } from '@headlessui/react';
+import { AiOutlineAudio, AiOutlineAudioMuted } from 'react-icons/ai';
 import RecordController from './RecordController';
 
 const videoOptions = [
@@ -22,11 +23,11 @@ const ScreenRecorder = () => {
     const [fileName, setFileName] = useState<string>('');
 
     const downloadMedia = useCallback(() => {
-        const webmBlob = new Blob(screenChunksRef.current, { type: 'video/mp4' });
-        const url = URL.createObjectURL(webmBlob);
+        const mp4Blob = new Blob(screenChunksRef.current, { type: 'video/mp4' });
+        const url = URL.createObjectURL(mp4Blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = fileName?.trim().length > 0 ? `${fileName}` : 'Hightool_Recording.mp4';
+        a.download = fileName?.trim().length > 0 ? `${fileName}.mp4` : 'Hightool_Recording.mp4';
         a.click();
         URL.revokeObjectURL(url);
     }, [screenChunksRef, fileName]);
@@ -45,15 +46,22 @@ const ScreenRecorder = () => {
         try {
             setIsRecording(true);
 
+            const audioConstrain = {
+                sampleSize: 16,
+                channelCount: 2,
+                sampleRate: 22050, // Lower sampling rate
+            };
+
             let combinedStream: MediaStream;
             const audioConstraints: MediaStreamConstraints = { audio: true };
             const screenConstraints: MediaStreamConstraints = {
                 video: {
-                    width: { ideal: resolution === '4k' ? 3840 : 1920 },
-                    height: { ideal: resolution === '4k' ? 2160 : 1080 },
-                    frameRate: { ideal: 60 },
+                    width: resolution === '4k' ? 3840 : 1920,
+                    height: resolution === '4k' ? 2160 : 1080,
+                    // frameRate: 60,
                 },
-                audio: audioEnabled
+                audio: audioEnabled ? audioConstrain : false,
+                preferCurrentTab: false
             };
 
             const screenStream = await navigator.mediaDevices.getDisplayMedia(screenConstraints);
@@ -116,7 +124,7 @@ const ScreenRecorder = () => {
                 <video ref={videoRef} autoPlay playsInline muted className="lg:w-full md:w-full lg:h-full md:h-full w-full p-2" />
             </div>
 
-            <div className="lg:w-4/12 md:w-6/12 w-full flex flex-wrap justify-center items-center gap-3 lg:pl-3 pl-0 flex-wrap: wrap">
+            <div className="lg:w-4/12 md:w-6/12 w-full flex flex-wrap justify-center items-stretch gap-3 lg:pl-3 pl-0 flex-wrap: wrap">
                 <div className="w-full flex flex-wrap items-center gap-3 bg-sky-100 p-5 rounded-md border">
                     <div className="font-bold text-2xl uppercase w-full text-center pb-3">
                         Record Options
@@ -143,7 +151,7 @@ const ScreenRecorder = () => {
                                 </button>
                             )}
                         </Switch>
-                        <span>Record Audio</span>
+                        <div className='flex items-center gap-1'>Audio {audioEnabled ? <AiOutlineAudio /> : <AiOutlineAudioMuted />} <span className='text-xs font-extralight'> - System sound only</span></div>
                     </div>
 
                     <div className="flex justify-center items-center gap-3 w-full">

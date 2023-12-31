@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import FAQ from './FAQ';
 import Features from './Features';
 
-const ScreenRecorder = dynamic(() => import('./ScreenRecorder'), { ssr: false });
+const ScreenRecorder = dynamic(() => import('./ScreenRecorder'), { ssr: true });
 
 const Index = () => {
 
