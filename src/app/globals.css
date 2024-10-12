@@ -4,67 +4,73 @@
 
 @layer base {
     :root {
-        --background: #ffffff;
-        --foreground: #010816;
-        --card: #ffffff;
-        --card-foreground: #010816;
-        --popover: #ffffff;
-        --popover-foreground: #010816;
-        --primary: #0f172a;
-        --primary-foreground: #f7f9fb;
-        --secondary: #f1f5f9;
-        --secondary-foreground: #0f172a;
-        --muted: #f1f5f9;
-        --muted-foreground: #64748b;
-        --accent: #f1f5f9;
-        --accent-foreground: #0f172a;
-        --destructive: #ee4444;
-        --destructive-foreground: #f7f9fb;
-        --border: #e2e8f0;
-        --input: #e2e8f0;
-        --ring: #010816;
-        --chart-1: #e76e4f;
-        --chart-2: #299d8f;
-        --chart-3: #264753;
-        --chart-4: #e8c468;
-        --chart-5: #f4a361;
+        --background: 0 0% 100%; /* #FFFFFF */
+        --foreground: 222.2 84% 4.9%; /* #1C1D23 */
+        --card: 0 0% 100%; /* #FFFFFF */
+        --card-foreground: 222.2 84% 4.9%; /* #1C1D23 */
+        --popover: 0 0% 100%; /* #FFFFFF */
+        --popover-foreground: 222.2 84% 4.9%; /* #1C1D23 */
+        --primary: 222.2 47.4% 11.2%; /* #1A1C27 */
+        --primary-foreground: 210 40% 98%; /* #F0F4FF */
+        --secondary: 210 40% 96.1%; /* #E8E9F2 */
+        --secondary-foreground: 222.2 47.4% 11.2%; /* #1A1C27 */
+        --muted: 210 40% 96.1%; /* #E8E9F2 */
+        --muted-foreground: 215.4 16.3% 46.9%; /* #5B5B6E */
+        --accent: 210 40% 96.1%; /* #E8E9F2 */
+        --accent-foreground: 222.2 47.4% 11.2%; /* #1A1C27 */
+        --destructive: 0 84.2% 60.2%; /* #FF6B35 */
+        --destructive-foreground: 210 40% 98%; /* #F0F4FF */
+        --border: 214.3 31.8% 91.4%; /* #E5E8F0 */
+        --input: 214.3 31.8% 91.4%; /* #E5E8F0 */
+        --ring: 222.2 84% 4.9%; /* #1C1D23 */
+        --chart-1: 12 76% 61%; /* #FFAA3A */
+        --chart-2: 173 58% 39%; /* #B57C33 */
+        --chart-3: 197 37% 24%; /* #A64D39 */
+        --chart-4: 43 74% 66%; /* #A8D2C0 */
+        --chart-5: 27 87% 67%; /* #B1E9A1 */
+        --radius: 0.5rem; /* N/A */
     }
 
     .dark {
-        --background: #010816;
-        --foreground: #f7f9fb;
-        --card: #010816;
-        --card-foreground: #f7f9fb;
-        --popover: #010816;
-        --popover-foreground: #f7f9fb;
-        --primary: #f7f9fb;
-        --primary-foreground: #0f172a;
-        --secondary: #2a3443;
-        --secondary-foreground: #f7f9fb;
-        --muted: #2a3443;
-        --muted-foreground: #3e536e;
-        --accent: #2a3443;
-        --accent-foreground: #f7f9fb;
-        --destructive: #9f2b2b;
-        --destructive-foreground: #f7f9fb;
-        --border: #2a3443;
-        --input: #2a3443;
-        --ring: #1a2b38;
-        --chart-1: #458bd2;
-        --chart-2: #1b927a;
-        --chart-3: #3f885b;
-        --chart-4: #2c537c;
-        --chart-5: #6c369d;
+        --background: 222.2 84% 4.9%; /* #1C1D23 */
+        --foreground: 210 40% 98%; /* #F0F4FF */
+        --card: 222.2 84% 4.9%; /* #1C1D23 */
+        --card-foreground: 210 40% 98%; /* #F0F4FF */
+        --popover: 222.2 84% 4.9%; /* #1C1D23 */
+        --popover-foreground: 210 40% 98%; /* #F0F4FF */
+        --primary: 210 40% 98%; /* #F0F4FF */
+        --primary-foreground: 222.2 47.4% 11.2%; /* #1A1C27 */
+        --secondary: 217.2 32.6% 17.5%; /* #2D2F38 */
+        --secondary-foreground: 210 40% 98%; /* #F0F4FF */
+        --muted: 217.2 32.6% 17.5%; /* #2D2F38 */
+        --muted-foreground: 215 20.2% 65.1%; /* #A1A4B0 */
+        --accent: 217.2 32.6% 17.5%; /* #2D2F38 */
+        --accent-foreground: 210 40% 98%; /* #F0F4FF */
+        --destructive: 0 62.8% 30.6%; /* #FF3B00 */
+        --destructive-foreground: 210 40% 98%; /* #F0F4FF */
+        --border: 217.2 32.6% 17.5%; /* #2D2F38 */
+        --input: 217.2 32.6% 17.5%; /* #2D2F38 */
+        --ring: 212.7 26.8% 83.9%; /* #D2D6E3 */
+        --chart-1: 220 70% 50%; /* #3A8EDE */
+        --chart-2: 160 60% 45%; /* #A8D8A6 */
+        --chart-3: 30 80% 55%; /* #B9D675 */
+        --chart-4: 280 65% 60%; /* #C45C98 */
+        --chart-5: 340 75% 55%; /* #D56F8A */
     }
-}
-
-body {
-    color: var(--foreground);
-    background: var(--background);
 }
 
 @layer utilities {
     .text-balance {
         text-wrap: balance;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
     }
 }
