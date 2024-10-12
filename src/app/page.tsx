@@ -1,139 +1,101 @@
-import { Metadata } from 'next';
-import { BsArrowRight, BsRecordCircle } from 'react-icons/bs';
-import { IoIosArrowRoundForward, IoIosCut } from 'react-icons/io';
-import { MdMovieFilter } from 'react-icons/md';
-import { PiTagSimpleDuotone } from 'react-icons/pi';
-import { HeadOne, ParaOne } from '~/widgets';
+import Image from "next/image";
 
-export const metadata: Metadata = {
-    alternates: {
-        canonical: 'https://www.hightool.net'
-    },
-    title: 'HighTool',
-    description: 'We offer you a powerful tools that can help you grow your online presence, including a YouTube tag generator, Instagram hashtag generator, and video trimmer. These tools can help you save time and effort, so you can focus on creating great content.',
-    keywords: 'HighTool, youtube tag generator, tag generator for youtube, protags, instagram hashtag generator',
-    applicationName: 'HighTool',
-    robots: 'index, follow',
-    metadataBase: new URL('https://www.hightool.net'),
-    openGraph: {
-        type: 'website',
-        siteName: 'hightool.net',
-        title: 'HighTool',
-        url: 'https://www.hightool.net',
-        images: '/fav/maskable_icon_x512.png',
-        description: 'We offer you a powerful tools that can help you grow your online presence, including a YouTube tag generator, Instagram hashtag generator, and video trimmer. These tools can help you save time and effort, so you can focus on creating great content.',
-    },
-    twitter: {
-        card: 'summary_large_image',
-        site: 'https://www.hightool.net',
-        title: 'HighTool',
-        images: '/fav/maskable_icon_x512.png',
-        description: 'We offer you a powerful tools that can help you grow your online presence, including a YouTube tag generator, Instagram hashtag generator, and video trimmer. These tools can help you save time and effort, so you can focus on creating great content.',
-    },
-    appleWebApp: {
-        capable: true,
-        title: 'hightool.net',
-        statusBarStyle: 'black',
-        startupImage: {
-            url: '/fav/maskable_icon_x512.png',
-        },
-    }
-};
+export default function Home() {
+  return (
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+        <Image
+          className="dark:invert"
+          src="https://nextjs.org/icons/next.svg"
+          alt="Next.js logo"
+          width={180}
+          height={38}
+          priority
+        />
+        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
+          <li className="mb-2">
+            Get started by editing{" "}
+            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
+              src/app/page.tsx
+            </code>
+            .
+          </li>
+          <li>Save and see your changes instantly.</li>
+        </ol>
 
-const Home = () => {
-
-    const tools = [
-        {
-            name: 'Keyword Generator',
-            icon: <PiTagSimpleDuotone fontSize={30} color='blue' />,
-            description: 'The tag generator provides you with effective tags based on your title and helps your content to be more recommended on your platform beyond your followers.',
-            available: true,
-            path: '/protags',
-            position: 'lg:shadow-sm shadow-none hover:shadow transition-shadow'
-        },
-        {
-            name: 'Screen Recorder',
-            icon: <BsRecordCircle fontSize={30} color='red' />,
-            description: 'Record your screen and audio without having to download or install any software. Perfect for students, teachers, businesses, and more.',
-            available: true,
-            path: '/screen-recorder',
-            position: 'lg:shadow-sm shadow-none hover:shadow transition-shadow'
-        },
-        {
-            name: 'Media Filter\'s',
-            icon: <MdMovieFilter fontSize={30} color='orange' />,
-            description: 'This tool provide you with the different kind of filters available for your audio and video files. By using this tool you can make your raw footages to the next level.',
-            available: false,
-            path: '/protags',
-            position: 'lg:shadow-sm shadow-none hover:shadow transition-shadow'
-        },
-        {
-            name: 'Video and Audio Trimmer',
-            icon: <IoIosCut fontSize={30} color='green' />,
-            description: 'Find the start and end time of the video or audio part you want to cut. Then enter the timecode of the required duration to get the selected area from the video or audio file.',
-            available: false,
-            path: '/protags',
-            position: 'lg:shadow-sm shadow-none hover:shadow transition-shadow'
-        }
-    ];
-
-    return (
-        <main className="flex flex-wrap items-center justify-center">
-            <section className="flex justify-center items-center lg:min-h-[85vh] md:min-h-[90vh] min-h-[60vh] dark:bg-gray-900 dark:bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/hero-pattern-dark.svg')]">
-                <div className='flex flex-wrap justify-center items-center'>
-                    <a
-                        target='_blank'
-                        href="https://www.instagram.com/jeeva_b_/"
-                        className="flex justify-center items-center py-1 px-4 pr-4 mb-7 text-sm text-cyan-600 bg-blue-5 border-dashed border border-cyan-600 rounded-full dark:bg-blue-900 dark:text-blue-300 hover:border-solid dark:hover:bg-blue-800"
-                    >
-                        <span className="text-sm font-medium mr-2"> Designed by Jee6 </span>
-                        <BsArrowRight />
-                    </a>
-
-                    <HeadOne>HighTool.net</HeadOne>
-                    <ParaOne className="mb-8 lg:max-w-7xl md:max-w-7xl px-6 text-center sm:px-16 lg:px-48">
-                        We offer you a powerful tools that can help you grow your online presence, including a YouTube tag generator, Instagram hashtag generator, and video trimmer.
-                        These tools can help you save time and effort, so you can focus on creating great content.
-                    </ParaOne>
-                </div>
-            </section>
-
-            <section className="flex dark:bg-gray-900">
-                <div className="py-8 px-5 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-                    <div className="max-w-screen-md mb-8 lg:mb-16">
-                        <h2 className="mb-4 lg:text-3xl md:text-3xl text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                            What&apos;s in <span className='text-blue-600'>HighTool</span>.net?
-                        </h2>
-                        <ParaOne className="lg:text-start md:text-start text-start">
-                            Here are the tools you need to make your life easier, more efficient, and more enjoyable on a daily basis.
-                        </ParaOne>
-                    </div>
-
-                    <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
-                        {tools.map((tool: any) =>
-                            <div key={tool.name} className={`lg:bg-white lg:p-5 lg:border lg:border-gray-200 lg:rounded-md ${tool.position}`}>
-                                <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-slate-10 shadow-md border border-gray-200  lg:h-12 lg:w-12 dark:bg-primary-900">
-                                    {tool.icon}
-                                </div>
-                                <h3 className="mb-2 text-xl font-bold dark:text-white"> {tool.name} </h3>
-                                <p className="text-gray-500 dark:text-gray-400"> {tool.description} </p>
-                                <div className='mt-4'>
-                                    {tool.available ?
-                                        <a href={tool.path} className='text-cyan-600 w-fit flex items-center text-sm tracking-tight mt-2 hover:underline cursor-pointer'>
-                                            Get Started <IoIosArrowRoundForward className='ml-1' />
-                                        </a>
-                                        :
-                                        <span className='text-gray-500 w-fit flex items-center text-sm tracking-tight mt-2 hover:underline cursor-not-allowed'>
-                                            Coming soon
-                                        </span>}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </section>
-        </main>
-    );
-};
-
-export default Home;
+        <div className="flex gap-4 items-center flex-col sm:flex-row">
+          <a
+            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
+            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              className="dark:invert"
+              src="https://nextjs.org/icons/vercel.svg"
+              alt="Vercel logomark"
+              width={20}
+              height={20}
+            />
+            Deploy now
+          </a>
+          <a
+            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
+            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Read our docs
+          </a>
+        </div>
+      </main>
+      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            aria-hidden
+            src="https://nextjs.org/icons/file.svg"
+            alt="File icon"
+            width={16}
+            height={16}
+          />
+          Learn
+        </a>
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            aria-hidden
+            src="https://nextjs.org/icons/window.svg"
+            alt="Window icon"
+            width={16}
+            height={16}
+          />
+          Examples
+        </a>
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            aria-hidden
+            src="https://nextjs.org/icons/globe.svg"
+            alt="Globe icon"
+            width={16}
+            height={16}
+          />
+          Go to nextjs.org →
+        </a>
+      </footer>
+    </div>
+  );
+}
