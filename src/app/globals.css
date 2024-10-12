@@ -2,26 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer base {
+    :root {
+        --background: #ffffff;
+        --foreground: #010816;
+        --card: #ffffff;
+        --card-foreground: #010816;
+        --popover: #ffffff;
+        --popover-foreground: #010816;
+        --primary: #0f172a;
+        --primary-foreground: #f7f9fb;
+        --secondary: #f1f5f9;
+        --secondary-foreground: #0f172a;
+        --muted: #f1f5f9;
+        --muted-foreground: #64748b;
+        --accent: #f1f5f9;
+        --accent-foreground: #0f172a;
+        --destructive: #ee4444;
+        --destructive-foreground: #f7f9fb;
+        --border: #e2e8f0;
+        --input: #e2e8f0;
+        --ring: #010816;
+        --chart-1: #e76e4f;
+        --chart-2: #299d8f;
+        --chart-3: #264753;
+        --chart-4: #e8c468;
+        --chart-5: #f4a361;
+    }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    .dark {
+        --background: #010816;
+        --foreground: #f7f9fb;
+        --card: #010816;
+        --card-foreground: #f7f9fb;
+        --popover: #010816;
+        --popover-foreground: #f7f9fb;
+        --primary: #f7f9fb;
+        --primary-foreground: #0f172a;
+        --secondary: #2a3443;
+        --secondary-foreground: #f7f9fb;
+        --muted: #2a3443;
+        --muted-foreground: #3e536e;
+        --accent: #2a3443;
+        --accent-foreground: #f7f9fb;
+        --destructive: #9f2b2b;
+        --destructive-foreground: #f7f9fb;
+        --border: #2a3443;
+        --input: #2a3443;
+        --ring: #1a2b38;
+        --chart-1: #458bd2;
+        --chart-2: #1b927a;
+        --chart-3: #3f885b;
+        --chart-4: #2c537c;
+        --chart-5: #6c369d;
+    }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+    color: var(--foreground);
+    background: var(--background);
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 }
