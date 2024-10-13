@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 
 const tools = [
     {
@@ -31,9 +32,9 @@ export const WhatsInHightool = () => {
         <section className="bg-light py-20 dark:bg-gray-900">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:mx-0">
-                    <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">What&#39;s in HIGHTOOL?</h2>
+                    <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">What's in HIGHTOOL?</h2>
                     <p className="mt-2 text-lg leading-8 text-muted-foreground">
-                        Your all-in-one hub for online productivity tools. Whether you&#39;re trimming videos, generating SEO-friendly keywords, or recording your screen, we’ve got the tools you need to save time and maximize efficiency. No downloads, no hassle—just simple, fast, and effective tools at your fingertips!
+                        Your all-in-one hub for online productivity tools. Whether you’re trimming videos, generating SEO-friendly keywords, or recording your screen, we’ve got the tools you need to save time and maximize efficiency.
                     </p>
                 </div>
                 <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-border sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">

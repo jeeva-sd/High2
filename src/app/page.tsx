@@ -4,10 +4,9 @@ import { WhatsInHightool, Introduction } from '~/components';
 export default function Home() {
     return (
         <div className="bg-background">
-            {/* Full-Screen Header Section */}
             <header className="flex flex-col items-center justify-center min-h-[80vh] px-4">
                 <div className="max-w-7xl mx-auto flex flex-col items-center text-center h-full transform -skew-y-3">
-                    <h1 className="text-6xl sm:text-8xl lg:text-9xl font-extrabold uppercase tracking-tighter text-foreground mb-4 ">
+                    <h1 className="text-6xl sm:text-8xl lg:text-9xl font-extrabold uppercase tracking-tighter text-foreground mb-4">
                         <span className="relative inline-block">
                             <span className="absolute text-shadow-lg text-primary -translate-x-1 -translate-y-1">
                                 HIGHTOOL.net
