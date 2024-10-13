@@ -2,6 +2,8 @@
 
 import React, { Fragment, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { FiSun } from 'react-icons/fi';
 import { IoCut } from 'react-icons/io5';
@@ -25,24 +27,28 @@ const pages = [
         name: 'Video Trimmer',
         icon: <IoCut color='green' />,
         description: 'Cut and trim your videos with precision using our online video trimmer.',
+        route: '/video-trimmer',
     },
     {
         id: 2,
         name: 'Tag Generator',
         icon: <MdOutlineTag color='blue' />,
         description: `The tag generator creates effective tags to increase your content's visibility.`,
+        route: '/tag-generator',
     },
     {
         id: 3,
         name: 'Screen Recorder',
         icon: <BsRecordCircle color='red' />,
         description: 'Record your screen and audio instantly, no downloads required. Ideal for students, teachers, and businesses.',
+        route: '/screen-recorder',
     },
 ];
 
 const MainHeader = () => {
     const { theme, setTheme } = useTheme();
-    const [selectedPage, setSelectedPage] = useState(pages[0]);
+    const router = useRouter();
+    const pathname = usePathname();
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
     return (
@@ -51,7 +57,7 @@ const MainHeader = () => {
                 <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
                     <div className='relative flex h-16 items-center justify-between'>
                         {/* Logo */}
-                        <div className='flex items-center'>
+                        <div className='flex items-center cursor-pointer select-none' onClick={() => router.push('/')}>
                             <Image
                                 width={192}
                                 height={192}
@@ -70,16 +76,17 @@ const MainHeader = () => {
                             {/* Menu Items */}
                             <div className='hidden sm:flex space-x-4'>
                                 {pages.map((item) => (
-                                    <a
+                                    <Link
                                         key={item.id}
-                                        href='#'
-                                        className={`${selectedPage.id === item.id ? 'bg-secondary text-primary font-semibold' : 'text-muted-foreground hover:bg-muted '}
-                                        rounded-md px-3 py-1.5 text-sm font-medium`}
-                                        onClick={() => setSelectedPage(item)}
+                                        href={item.route}
+                                        className={`${pathname === item.route
+                                            ? 'bg-secondary text-primary font-semibold'
+                                            : 'text-muted-foreground hover:bg-muted'}
+                                            rounded-md px-3 py-1.5 text-sm font-medium`}
                                         style={{ height: '28px', display: 'flex', alignItems: 'center' }}
                                     >
                                         {item.name}
-                                    </a>
+                                    </Link>
                                 ))}
                             </div>
 
@@ -143,14 +150,12 @@ const MainHeader = () => {
                     </DrawerHeader>
                     <div className='p-4'>
                         {pages.map((page) => (
-                            <div
+                            <Link
                                 key={page.id}
-                                onClick={() => {
-                                    setSelectedPage(page);
-                                    setIsDrawerOpen(false);
-                                }}
+                                href={page.route}
+                                onClick={() => setIsDrawerOpen(false)}
                                 className={`flex items-center gap-4 p-2 rounded-md cursor-pointer hover:bg-muted transition-colors duration-200
-                                ${selectedPage.id === page.id ? 'bg-primary text-primary-foreground hover:text-popover-foreground' : ''}`}
+                                ${pathname === page.route ? 'bg-primary text-primary-foreground hover:text-popover-foreground' : ''}`}
                             >
                                 <div className='flex items-center justify-center text-xl'>{page.icon}</div>
                                 <div>
@@ -159,7 +164,7 @@ const MainHeader = () => {
                                         {page.description}
                                     </p>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                     <DrawerFooter>
