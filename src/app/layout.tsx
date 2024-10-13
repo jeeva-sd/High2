@@ -22,7 +22,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     disableTransitionOnChange
                 >
                     <MainLayout>
-                        <div className='absolute my-20 transition-all duration-1000'>
+                        <div className='absolute my-20 transition-all duration-200'>
                             {children}
                         </div>
                     </MainLayout>

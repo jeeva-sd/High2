@@ -53,7 +53,7 @@ const MainHeader = () => {
 
     return (
         <Fragment>
-            <nav style={{ backdropFilter: 'saturate(180%) blur(5px)' }} className='fixed w-full bg-background shadow-sm shadow-border z-10'>
+            <nav className='fixed w-full bg-background/70 dark:bg-background/80 backdrop-blur-md shadow-sm shadow-border z-10'>
                 <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
                     <div className='relative flex h-16 items-center justify-between'>
                         {/* Logo */}
