@@ -1,27 +1,30 @@
+import Link from 'next/link';
+import { FaArrowRightLong } from 'react-icons/fa6';
+
 const tools = [
     {
         id: 1,
         title: 'Screen Recorder',
-        href: '#',
+        href: '/video/recorder',
         description:
             'This tool lets you capture your screen activity in real-time. Whether you’re making a tutorial, recording gameplay, or presenting slides, it’s never been easier to record high-quality screen videos directly from your browser.',
-        category: { title: 'Screen Recording', href: '#' },
+        category: { title: 'Screen Recording' },
     },
     {
         id: 2,
         title: 'Online Video Trimmer',
-        href: '#',
+        href: '/video/trimmer', // Update with actual route
         description:
             'This tool lets you trim any video file in just a few clicks. Whether you\'re creating content for social media, editing a presentation, or simply trimming a personal video, our tool is here to make it simple and efficient.',
-        category: { title: 'Video Editing', href: '#' },
+        category: { title: 'Video Editing' },
     },
     {
         id: 3,
         title: 'Keyword Generator',
-        href: '#',
+        href: '/seo/keyword-generator', // Update with actual route
         description:
             'Boost your website’s or Youtube’s SEO performance with our Keyword Generator tool. Whether you\'re running a blog, an online store, or a YouTube channel, finding the right keywords is essential to rank higher in search results. Our tool helps you discover high-traffic, low-competition keywords tailored to your content.',
-        category: { title: 'SEO', href: '#' },
+        category: { title: 'SEO' },
     },
 ];
 
@@ -46,7 +49,7 @@ export const WhatsInHightool = () => {
                                 </span>
                             </div>
                             <div className="group relative">
-                                <h3 className="mt-3 text-lg font-semibold leading-6 text-foreground hover:text-foreground/70 hover:underline hover:cursor-pointer">
+                                <h3 className="mt-3 text-lg font-semibold leading-6 text-foreground">
                                     <span className="absolute inset-0" />
                                     {tool.title}
                                 </h3>
@@ -54,6 +57,10 @@ export const WhatsInHightool = () => {
                                     {tool.description}
                                 </p>
                             </div>
+                            <Link href={tool.href} className="flex text-sm gap-2 items-center py-2 font-mono text-center text-primary hover:underline hover:text-primary/80">
+                                Get started
+                                <FaArrowRightLong />
+                            </Link>
                         </article>
                     ))}
                 </div>

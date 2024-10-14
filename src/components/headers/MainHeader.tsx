@@ -24,24 +24,24 @@ import hightoolLogo from '~/assets/images/logo/hightool_192.png';
 const pages = [
     {
         id: 1,
+        name: 'Screen Recorder',
+        icon: <BsRecordCircle color='red' />,
+        description: 'Record your screen and audio instantly, no downloads required. Ideal for students, teachers, and businesses.',
+        route: '/video/recorder',
+    },
+    {
+        id: 2,
         name: 'Video Trimmer',
         icon: <IoCut color='green' />,
         description: 'Cut and trim your videos with precision using our online video trimmer.',
         route: '/video-trimmer',
     },
     {
-        id: 2,
+        id: 3,
         name: 'Tag Generator',
         icon: <MdOutlineTag color='blue' />,
         description: `The tag generator creates effective tags to increase your content's visibility.`,
         route: '/tag-generator',
-    },
-    {
-        id: 3,
-        name: 'Screen Recorder',
-        icon: <BsRecordCircle color='red' />,
-        description: 'Record your screen and audio instantly, no downloads required. Ideal for students, teachers, and businesses.',
-        route: '/screen-recorder',
     },
 ];
 
