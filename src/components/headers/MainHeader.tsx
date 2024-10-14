@@ -54,8 +54,8 @@ const MainHeader = () => {
     return (
         <Fragment>
             <nav className='sticky top-0 w-full bg-background/70 dark:bg-background/80 backdrop-blur-md shadow-sm shadow-border z-10'>
-                <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
-                    <div className='relative flex h-16 items-center justify-between'>
+                <div className='w-full px-2 sm:px-6 lg:px-8'>
+                    <div className='relative flex w-full h-16 items-center justify-between'>
                         {/* Logo */}
                         <div className='flex items-center cursor-pointer select-none' onClick={() => router.push('/')}>
                             <Image

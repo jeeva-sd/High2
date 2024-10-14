@@ -27,7 +27,7 @@ const tools = [
 
 export const WhatsInHightool = () => {
     return (
-        <section className="bg-background py-20">
+        <section className="bg-background my-20 py-20">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:mx-0">
                     <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
@@ -37,7 +37,7 @@ export const WhatsInHightool = () => {
                         Your all-in-one hub for online productivity tools. Whether you’re trimming videos, generating SEO-friendly keywords, or recording your screen, we’ve got the tools you need to save time and maximize efficiency.
                     </p>
                 </div>
-                <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-border sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-border sm:pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                     {tools.map((tool, index) => (
                         <article key={tool.id} className={`flex flex-col items-start justify-between ${index === 0 ? "lg:mt:0 md:mt-0 mt-10" : ""}`}>
                             <div className="flex items-center gap-x-4 text-xs">
