@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-
 const tools = [
     {
         id: 1,
@@ -29,10 +27,12 @@ const tools = [
 
 export const WhatsInHightool = () => {
     return (
-        <section className="bg-light py-20 dark:bg-gray-900">
+        <section className="bg-background py-20">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:mx-0">
-                    <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">What's in HIGHTOOL?</h2>
+                    <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+                        What's in HIGHTOOL?
+                    </h2>
                     <p className="mt-2 text-lg leading-8 text-muted-foreground">
                         Your all-in-one hub for online productivity tools. Whether you’re trimming videos, generating SEO-friendly keywords, or recording your screen, we’ve got the tools you need to save time and maximize efficiency.
                     </p>
@@ -43,19 +43,21 @@ export const WhatsInHightool = () => {
                             <div className="flex items-center gap-x-4 text-xs">
                                 <a
                                     href={tool.category.href}
-                                    className="relative rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                                    className="relative rounded-full bg-muted px-3 py-1.5 font-medium text-muted-foreground"
                                 >
                                     {tool.category.title}
                                 </a>
                             </div>
                             <div className="group relative">
-                                <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 dark:text-white group-hover:text-gray-600">
+                                <h3 className="mt-3 text-lg font-semibold leading-6 text-foreground">
                                     <a href={tool.href}>
                                         <span className="absolute inset-0" />
                                         {tool.title}
                                     </a>
                                 </h3>
-                                <p className="mt-5 line-clamp-3 text-sm leading-6 text-muted-foreground ">{tool.description}</p>
+                                <p className="mt-5 line-clamp-3 text-sm leading-6 text-muted-foreground">
+                                    {tool.description}
+                                </p>
                             </div>
                         </article>
                     ))}
