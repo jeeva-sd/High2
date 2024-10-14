@@ -41,19 +41,14 @@ export const WhatsInHightool = () => {
                     {tools.map((tool, index) => (
                         <article key={tool.id} className={`flex flex-col items-start justify-between ${index === 0 ? "lg:mt:0 md:mt-0 mt-10" : ""}`}>
                             <div className="flex items-center gap-x-4 text-xs">
-                                <a
-                                    href={tool.category.href}
-                                    className="relative rounded-full bg-muted px-3 py-1.5 font-medium text-muted-foreground"
-                                >
+                                <span className="relative rounded-full bg-muted px-3 py-1.5 font-medium text-muted-foreground">
                                     {tool.category.title}
-                                </a>
+                                </span>
                             </div>
                             <div className="group relative">
-                                <h3 className="mt-3 text-lg font-semibold leading-6 text-foreground">
-                                    <a href={tool.href}>
-                                        <span className="absolute inset-0" />
-                                        {tool.title}
-                                    </a>
+                                <h3 className="mt-3 text-lg font-semibold leading-6 text-foreground hover:text-foreground/70 hover:underline hover:cursor-pointer">
+                                    <span className="absolute inset-0" />
+                                    {tool.title}
                                 </h3>
                                 <p className="mt-5 line-clamp-3 text-sm leading-6 text-muted-foreground">
                                     {tool.description}
