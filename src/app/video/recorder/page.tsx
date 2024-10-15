@@ -1,8 +1,9 @@
 import React from 'react'
+import { ScreenRecorder } from '~/components';
 
 const page = () => {
   return (
-    <div>page</div>
+    <div><ScreenRecorder /></div>
   )
 }
 
