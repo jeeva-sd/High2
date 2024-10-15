@@ -30,7 +30,7 @@ const ScreenRecorder = () => {
             cameraStreamRef.current = cameraStream;
 
             if (screenVideoRef.current) {
-                screenVideoRef.current.srcObject = screenStream; // unmute
+                screenVideoRef.current.srcObject = screenStream;
                 screenVideoRef.current.play();
             }
             if (cameraVideoRef.current) {
@@ -95,8 +95,9 @@ const ScreenRecorder = () => {
             };
             drawVideoStreams();
 
-            const canvasStream: MediaStream = canvas?.captureStream(60); // Capture at 60 FPS
+            const canvasStream: MediaStream = canvas?.captureStream(60) as MediaStream; // Capture at 60 FPS
 
+            // Combine audio tracks from screen and camera
             const combinedAudioStream = new MediaStream([
                 ...screenStream.getAudioTracks(),
                 ...cameraStream.getAudioTracks(),
@@ -106,7 +107,7 @@ const ScreenRecorder = () => {
                 canvasStream?.addTrack(track);
             });
 
-            const mergedStream = new MediaStream([...canvasStream?.getTracks()]);
+            const mergedStream = new MediaStream([...canvasStream.getTracks()]);
 
             mediaRecorderRef.current = new MediaRecorder(mergedStream, {
                 videoBitsPerSecond: 2500000,
