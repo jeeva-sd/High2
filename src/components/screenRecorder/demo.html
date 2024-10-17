@@ -1,0 +1,156 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+
+    <title>Galileo Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div class="relative flex size-full min-h-screen flex-col bg-black dark group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#333333] px-10 py-3">
+          <div class="flex items-center gap-4 text-[#FFFFFF]">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path></svg>
+            </div>
+            <h2 class="text-[#FFFFFF] text-lg font-bold leading-tight tracking-[-0.015em]">Quick Screen Recorder</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <div class="flex items-center gap-9">
+              <a class="text-[#FFFFFF] text-sm font-medium leading-normal" href="#">For Work</a>
+              <a class="text-[#FFFFFF] text-sm font-medium leading-normal" href="#">For School</a>
+              <a class="text-[#FFFFFF] text-sm font-medium leading-normal" href="#">For Life</a>
+            </div>
+            <button
+              class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-4 bg-[#FFFFFF] text-black text-sm font-bold leading-normal tracking-[0.015em]"
+            >
+              <span class="truncate">Upgrade</span>
+            </button>
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+              style='background-image: url("https://cdn.usegalileo.ai/sdxl10/3dc4513c-d8b7-4f0e-84a5-582ae4c4870e.png");'
+            ></div>
+          </div>
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1">
+            <div class="flex flex-wrap justify-between gap-3 p-4">
+              <p class="text-[#FFFFFF] tracking-light text-[32px] font-bold leading-tight min-w-72">Record a quick video</p>
+            </div>
+            <div
+              class="relative flex items-center justify-center bg-[#FFFFFF] bg-cover bg-center aspect-video"
+              style='background-image: url("https://cdn.usegalileo.ai/stability/84620b7b-6291-49d8-9516-2875bd27380a.png");'
+            >
+              <button class="flex shrink-0 items-center justify-center rounded-full size-16 bg-black/40 text-white">
+                <div class="text-inherit" data-icon="Play" data-size="24px" data-weight="fill">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                      d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"
+                    ></path>
+                  </svg>
+                </div>
+              </button>
+              <div class="absolute inset-x-0 bottom-0 px-4 py-3">
+                <div class="flex h-4 items-center justify-center">
+                  <div class="h-1 flex-1 rounded-full bg-white"></div>
+                  <div class="relative"><div class="absolute -left-2 -top-2 size-4 rounded-full bg-white"></div></div>
+                  <div class="h-1 flex-1 rounded-full bg-white opacity-40"></div>
+                </div>
+                <div class="flex items-center justify-between">
+                  <p class="text-white text-xs font-medium leading-normal tracking-[0.015em]">0:37</p>
+                  <p class="text-white text-xs font-medium leading-normal tracking-[0.015em]">2:23</p>
+                </div>
+              </div>
+            </div>
+            <div class="flex px-4 py-3">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-4 flex-1 bg-[#FFFFFF] text-black gap-2 pl-4 text-sm font-bold leading-normal tracking-[0.015em]"
+              >
+                <div class="text-black" data-icon="Circle" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"></path>
+                  </svg>
+                </div>
+                <span class="truncate">Start Recording</span>
+              </button>
+            </div>
+            <h3 class="text-[#FFFFFF] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Options</h3>
+            <div class="flex items-center gap-4 bg-black px-4 min-h-[72px] py-2 justify-between">
+              <div class="flex flex-col justify-center">
+                <p class="text-[#FFFFFF] text-base font-medium leading-normal line-clamp-1">Camera</p>
+                <p class="text-[#CBCBCB] text-sm font-normal leading-normal line-clamp-2">Turn on your camera during the recording</p>
+              </div>
+              <div class="shrink-0">
+                <label
+                  class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#333333] p-0.5 has-[:checked]:justify-end has-[:checked]:bg-[#FFFFFF]"
+                >
+                  <div class="h-full w-[27px] rounded-full bg-white" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px, rgba(0, 0, 0, 0.06) 0px 3px 1px;"></div>
+                  <input type="checkbox" class="invisible absolute" />
+                </label>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 bg-black px-4 min-h-[72px] py-2 justify-between">
+              <div class="flex flex-col justify-center">
+                <p class="text-[#FFFFFF] text-base font-medium leading-normal line-clamp-1">Audio</p>
+                <p class="text-[#CBCBCB] text-sm font-normal leading-normal line-clamp-2">Capture internal audio while recording your screen</p>
+              </div>
+              <div class="shrink-0">
+                <label
+                  class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#333333] p-0.5 has-[:checked]:justify-end has-[:checked]:bg-[#FFFFFF]"
+                >
+                  <div class="h-full w-[27px] rounded-full bg-white" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px, rgba(0, 0, 0, 0.06) 0px 3px 1px;"></div>
+                  <input type="checkbox" class="invisible absolute" />
+                </label>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 bg-black px-4 min-h-[72px] py-2 justify-between">
+              <div class="flex flex-col justify-center">
+                <p class="text-[#FFFFFF] text-base font-medium leading-normal line-clamp-1">Quality</p>
+                <p class="text-[#CBCBCB] text-sm font-normal leading-normal line-clamp-2">
+                  Choose the quality of your video file. Higher quality videos will take up more storage space.
+                </p>
+              </div>
+              <div class="shrink-0">
+                <div class="text-[#FFFFFF] flex size-7 items-center justify-center" data-icon="CaretRight" data-size="24px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 bg-black px-4 min-h-[72px] py-2 justify-between">
+              <div class="flex flex-col justify-center">
+                <p class="text-[#FFFFFF] text-base font-medium leading-normal line-clamp-1">Frame Rate</p>
+                <p class="text-[#CBCBCB] text-sm font-normal leading-normal line-clamp-2">
+                  Choose the number of frames per second (FPS) for your video. Higher FPS videos will take up more storage space.
+                </p>
+              </div>
+              <div class="shrink-0">
+                <div class="text-[#FFFFFF] flex size-7 items-center justify-center" data-icon="CaretRight" data-size="24px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="flex px-4 py-3">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-4 flex-1 bg-[#333333] text-[#FFFFFF] text-sm font-bold leading-normal tracking-[0.015em]"
+              >
+                <span class="truncate">Cancel</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

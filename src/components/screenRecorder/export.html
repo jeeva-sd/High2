@@ -1,0 +1,121 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+
+    <title>Galileo Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div class="relative flex size-full min-h-screen flex-col bg-black dark group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#333333] px-10 py-3">
+          <div class="flex items-center gap-4 text-[#FFFFFF]">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_6_535)">
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"
+                    fill="currentColor"
+                  ></path>
+                </g>
+                <defs>
+                  <clipPath id="clip0_6_535"><rect width="48" height="48" fill="white"></rect></clipPath>
+                </defs>
+              </svg>
+            </div>
+            <h2 class="text-[#FFFFFF] text-lg font-bold leading-tight tracking-[-0.015em]">Screencastify</h2>
+          </div>
+        </header>
+        <div class="gap-1 px-6 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[920px] flex-1">
+            <div class="flex flex-wrap gap-2 p-4">
+              <a class="text-[#CBCBCB] text-base font-medium leading-normal" href="#">Record</a>
+              <span class="text-[#CBCBCB] text-base font-medium leading-normal">/</span>
+              <span class="text-[#FFFFFF] text-base font-medium leading-normal">Export</span>
+            </div>
+            <h1 class="text-[#FFFFFF] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 text-left pb-3 pt-5">Export</h1>
+            <p class="text-[#FFFFFF] text-base font-normal leading-normal pb-3 pt-1 px-4">Name and save your video</p>
+            <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+              <label class="flex flex-col min-w-40 flex-1">
+                <input
+                  placeholder="My video.mp4"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded text-[#FFFFFF] focus:outline-0 focus:ring-0 border border-[#434343] bg-black focus:border-[#434343] h-14 placeholder:text-[#CBCBCB] p-[15px] text-base font-normal leading-normal"
+                  value=""
+                />
+              </label>
+            </div>
+            <h3 class="text-[#FFFFFF] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">File format</h3>
+            <div class="flex flex-wrap gap-3 p-4">
+              <label
+                class="text-sm font-medium leading-normal flex items-center justify-center rounded border border-[#434343] px-4 h-11 text-[#FFFFFF] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#FFFFFF] relative cursor-pointer"
+              >
+                MP4 (Recommended)
+                <input type="radio" class="invisible absolute" name="c4aa4824-c230-44a6-8a3c-1844ab12c823" />
+              </label>
+              <label
+                class="text-sm font-medium leading-normal flex items-center justify-center rounded border border-[#434343] px-4 h-11 text-[#FFFFFF] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#FFFFFF] relative cursor-pointer"
+              >
+                GIF
+                <input type="radio" class="invisible absolute" name="c4aa4824-c230-44a6-8a3c-1844ab12c823" />
+              </label>
+              <label
+                class="text-sm font-medium leading-normal flex items-center justify-center rounded border border-[#434343] px-4 h-11 text-[#FFFFFF] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#FFFFFF] relative cursor-pointer"
+              >
+                WEBM
+                <input type="radio" class="invisible absolute" name="c4aa4824-c230-44a6-8a3c-1844ab12c823" />
+              </label>
+            </div>
+            <h3 class="text-[#FFFFFF] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Export settings</h3>
+            <div class="flex px-4 py-3 justify-start">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-4 bg-transparent text-[#FFFFFF] text-sm font-bold leading-normal tracking-[0.015em]"
+              >
+                <span class="truncate">Show advanced settings</span>
+              </button>
+            </div>
+            <div class="@container">
+              <div class="relative flex w-full flex-col items-start justify-between gap-3 p-4 @[480px]:flex-row">
+                <p class="text-[#FFFFFF] text-base font-medium leading-normal w-full shrink-[3]">Trim the start and end</p>
+                <div class="flex h-[38px] w-full pt-1.5">
+                  <div class="flex h-1 w-full rounded-sm bg-[#434343] pl-[60%] pr-[15%]">
+                    <div class="relative">
+                      <div class="absolute -left-3 -top-1.5 flex flex-col items-center gap-1">
+                        <div class="size-4 rounded-full bg-[#FFFFFF]"></div>
+                        <p class="text-[#FFFFFF] text-sm font-normal leading-normal">0</p>
+                      </div>
+                    </div>
+                    <div class="h-1 flex-1 rounded-sm bg-[#FFFFFF]"></div>
+                    <div class="relative">
+                      <div class="absolute -left-3 -top-1.5 flex flex-col items-center gap-1">
+                        <div class="size-4 rounded-full bg-[#FFFFFF]"></div>
+                        <p class="text-[#FFFFFF] text-sm font-normal leading-normal">0</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex px-4 py-3">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-4 flex-1 bg-[#FFFFFF] text-black text-sm font-bold leading-normal tracking-[0.015em]"
+              >
+                <span class="truncate">Download</span>
+              </button>
+            </div>
+            <p class="text-[#CBCBCB] text-sm font-normal leading-normal pb-3 pt-1 px-4">MP4 • 1920x1080 • 30 fps • 00:00 • 00:00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

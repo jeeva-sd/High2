@@ -1,131 +1,193 @@
-"use client";
-import React, { useRef, useState, useEffect } from "react";
+'use client';
+
+import { useEffect, useRef, useState } from "react";
+import { Button } from "~/components/ui/button";
+import { Label } from "~/components/ui/label";
+import { Switch } from "../ui/switch";
+import { BitrateSelector } from "./BitrateSelector";
+import { FpsSelector } from "./FpsSelector";
+import { AspectRatio } from "~/components/ui/aspect-ratio";
+import { ModelSelector } from "./model-selector";
 
 const ScreenRecorder = () => {
     const [recording, setRecording] = useState(false);
+    const [paused, setPaused] = useState(false);
     const [mediaBlobUrl, setMediaBlobUrl] = useState<string | null>(null);
     const [mirrorCamera, setMirrorCamera] = useState(false);
-    const [isAudioMuted, setIsAudioMuted] = useState(false); // Audio mute state
+    const [microphoneEnabled, setMicrophoneEnabled] = useState(false);
+    const [isAudioMuted, setIsAudioMuted] = useState(false);
+    const [recordingType, setRecordingType] = useState("Screen");
+    const [videoQuality, setVideoQuality] = useState([4]);
+    const [videoFps, setVideoFps] = useState([30]);
+    const [recordingDuration, setRecordingDuration] = useState(0);
+    const [recordedFileSize, setRecordedFileSize] = useState('0');
+
     const screenStreamRef = useRef<MediaStream | null>(null);
     const cameraStreamRef = useRef<MediaStream | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const chunksRef = useRef<Blob[]>([]);
-
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const screenVideoRef = useRef<HTMLVideoElement | null>(null);
     const cameraVideoRef = useRef<HTMLVideoElement | null>(null);
+    const isDrawingRef = useRef(false);
+    const drawIntervalRef = useRef<NodeJS.Timeout | null>(null);
+    const durationIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
     const startRecording = async () => {
         try {
-            const screenStream = await navigator.mediaDevices.getDisplayMedia({
-                video: true,
-                audio: true,
-            });
-            const cameraStream = await navigator.mediaDevices.getUserMedia({
-                video: true,
-                audio: true,
-            });
+            const cameraStream = recordingType.includes("Camera")
+                ? await navigator.mediaDevices.getUserMedia({ video: true, audio: microphoneEnabled ? { sampleRate: 44100 } : false })
+                : null;
+            const screenStream = recordingType.includes("Screen")
+                ? await navigator.mediaDevices.getDisplayMedia({
+                    video: { frameRate: videoFps[0] },
+                    audio: microphoneEnabled ? { sampleRate: 44100 } : false
+                })
+                : null;
 
             screenStreamRef.current = screenStream;
             cameraStreamRef.current = cameraStream;
 
-            if (screenVideoRef.current) {
+            if (screenVideoRef.current && screenStream) {
                 screenVideoRef.current.srcObject = screenStream;
                 screenVideoRef.current.play();
             }
-            if (cameraVideoRef.current) {
+            if (cameraVideoRef.current && cameraStream) {
                 cameraVideoRef.current.srcObject = cameraStream;
                 cameraVideoRef.current.play();
             }
 
-            // Add event listener to stop recording when the screen stream ends
-            screenStream.getTracks().forEach(track => {
-                track.addEventListener('ended', stopRecording);
-            });
+            screenStream?.getTracks().forEach((track) => track.addEventListener('ended', stopRecording));
+            cameraStream?.getTracks().forEach((track) => track.addEventListener('ended', stopRecording));
 
             const canvas = canvasRef.current;
             const canvasContext = canvas?.getContext("2d");
-            const screenSettings = screenStream.getVideoTracks()[0].getSettings();
+            const screenSettings = screenStream?.getVideoTracks()[0]?.getSettings();
 
             if (canvas) {
-                canvas.width = screenSettings.width!;
-                canvas.height = screenSettings.height!;
+                canvas.width = screenSettings?.width || 1920;
+                canvas.height = screenSettings?.height || 1080;
             }
 
             const drawVideoStreams = () => {
-                if (canvas && canvasContext && screenVideoRef.current && cameraVideoRef.current) {
-                    // Clear the canvas
+                if (!isDrawingRef.current) return;
+
+                if (canvas && canvasContext && cameraVideoRef.current) {
                     canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
-                    // Draw screen video on the canvas
-                    canvasContext.drawImage(
-                        screenVideoRef.current,
-                        0,
-                        0,
-                        canvas.width,
-                        canvas.height
-                    );
+                    // If screenStream exists, draw it on the canvas
+                    if (screenStream && screenVideoRef.current) {
+                        canvasContext.drawImage(screenVideoRef.current, 0, 0, canvas.width, canvas.height);
 
-                    // Draw camera video in the bottom-right corner
-                    const cameraSize = 240; // Size for camera video
-                    const cameraX = canvas.width - cameraSize - 20; // Adjust x position for margin
-                    const cameraY = canvas.height - cameraSize - 20; // Adjust y position for margin
-                    const radius = cameraSize / 2;
+                        // Draw the camera stream in a smaller position
+                        const cameraSize = 240;
+                        const cameraX = canvas.width - cameraSize - 20;
+                        const cameraY = canvas.height - cameraSize - 20;
+                        const radius = cameraSize / 2;
 
-                    canvasContext.save(); // Save the current context state
-                    canvasContext.beginPath();
-                    canvasContext.arc(cameraX + radius, cameraY + radius, radius, 0, Math.PI * 2);
-                    canvasContext.clip(); // Clip to the circle
+                        canvasContext.save();
+                        canvasContext.beginPath();
+                        canvasContext.arc(cameraX + radius, cameraY + radius, radius, 0, Math.PI * 2);
+                        canvasContext.clip();
 
-                    // Apply mirroring effect if enabled
-                    if (mirrorCamera) {
-                        canvasContext.translate(cameraX + cameraSize, cameraY); // Move to the right edge
-                        canvasContext.scale(-1, 1); // Mirror horizontally
-                        canvasContext.drawImage(cameraVideoRef.current, 0, 0, cameraSize, cameraSize); // Draw mirrored image
-                        canvasContext.scale(-1, 1); // Restore scale
-                        canvasContext.translate(-(cameraX + cameraSize), -cameraY); // Move back
-                    } else {
-                        canvasContext.drawImage(cameraVideoRef.current, cameraX, cameraY, cameraSize, cameraSize);
+                        if (mirrorCamera) {
+                            canvasContext.translate(cameraX + cameraSize, cameraY);
+                            canvasContext.scale(-1, 1);
+                            canvasContext.drawImage(cameraVideoRef.current, 0, 0, cameraSize, cameraSize);
+                            canvasContext.scale(-1, 1);
+                            canvasContext.translate(-(cameraX + cameraSize), -cameraY);
+                        } else {
+                            canvasContext.drawImage(cameraVideoRef.current, cameraX, cameraY, cameraSize, cameraSize);
+                        }
+
+                        canvasContext.restore();
                     }
-
-                    canvasContext.restore(); // Restore the context
-
-                    requestAnimationFrame(drawVideoStreams); // Keep drawing in a loop
+                    // If only the camera is recording, show it full-screen
+                    else if (cameraStream) {
+                        if (mirrorCamera) {
+                            canvasContext.translate(canvas.width, 0);
+                            canvasContext.scale(-1, 1);
+                            canvasContext.drawImage(cameraVideoRef.current, 0, 0, canvas.width, canvas.height);
+                            canvasContext.scale(-1, 1);
+                            canvasContext.translate(-canvas.width, 0);
+                        } else {
+                            canvasContext.drawImage(cameraVideoRef.current, 0, 0, canvas.width, canvas.height);
+                        }
+                    }
                 }
             };
-            drawVideoStreams();
 
-            const canvasStream: MediaStream = canvas?.captureStream(60) as MediaStream; // Capture at 60 FPS
+            isDrawingRef.current = true;
+            drawIntervalRef.current = setInterval(drawVideoStreams, 100);
 
-            // Combine audio tracks from screen and camera
+            const canvasStream: MediaStream = canvas?.captureStream(60) as MediaStream;
             const combinedAudioStream = new MediaStream([
-                ...screenStream.getAudioTracks(),
-                ...cameraStream.getAudioTracks(),
+                ...screenStream?.getAudioTracks() || [],
+                ...cameraStream?.getAudioTracks() || [],
             ]);
 
-            combinedAudioStream.getAudioTracks().forEach((track) => {
-                canvasStream?.addTrack(track);
-            });
-
+            combinedAudioStream.getAudioTracks().forEach((track) => canvasStream.addTrack(track));
             const mergedStream = new MediaStream([...canvasStream.getTracks()]);
 
+            const bitrate = videoQuality[0] * 1000000;
             mediaRecorderRef.current = new MediaRecorder(mergedStream, {
-                videoBitsPerSecond: 2500000,
-                mimeType: "video/webm; codecs=vp8, opus"
+                videoBitsPerSecond: bitrate,
+                audioBitsPerSecond: 128000,
+                mimeType: "video/webm; codecs=vp8, opus",
             });
+
             chunksRef.current = [];
+
+            const calculateFileSize = (chunks: BlobPart[]) => {
+                const blob = new Blob(chunks);
+                const totalSize = blob.size;
+
+                if (totalSize < 1024) {
+                    return `${totalSize} bytes`;
+                } else if (totalSize < 1024 * 1024) {
+                    return `${(totalSize / 1024).toFixed(2)} KB`;
+                } else if (totalSize < 1024 * 1024 * 1024) {
+                    return `${(totalSize / (1024 * 1024)).toFixed(2)} MB`;
+                } else {
+                    return `${(totalSize / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+                }
+            };
 
             mediaRecorderRef.current.ondataavailable = (e) => {
                 chunksRef.current.push(e.data);
+                const recordedFileSize = calculateFileSize(chunksRef.current);
+                setRecordedFileSize(recordedFileSize);
+                console.log('Current file size:', recordedFileSize);
             };
 
             mediaRecorderRef.current.onstop = () => {
                 const blob = new Blob(chunksRef.current, { type: "video/webm" });
                 setMediaBlobUrl(URL.createObjectURL(blob));
+
+                screenStream?.getTracks().forEach(track => track.stop());
+                cameraStream?.getTracks().forEach(track => track.stop());
+
+                if (canvasRef.current) {
+                    const ctx = canvasRef.current.getContext("2d");
+                    ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+                }
+
+                isDrawingRef.current = false;
+                if (drawIntervalRef.current) {
+                    clearInterval(drawIntervalRef.current);
+                }
+
+                if (durationIntervalRef.current) {
+                    clearInterval(durationIntervalRef.current);
+                }
             };
 
-            mediaRecorderRef.current.start();
+            mediaRecorderRef.current.start(1000);
             setRecording(true);
+
+            durationIntervalRef.current = setInterval(() => {
+                setRecordingDuration(prev => prev + 1);
+            }, 1000);
         } catch (err) {
             console.error("Error starting recording:", err);
             alert("Failed to start recording. Please ensure you have granted the necessary permissions.");
@@ -136,93 +198,105 @@ const ScreenRecorder = () => {
         if (mediaRecorderRef.current) {
             mediaRecorderRef.current.stop();
         }
-
-        if (screenStreamRef.current) {
-            screenStreamRef.current.getTracks().forEach((track) => track.stop());
-        }
-
-        if (cameraStreamRef.current) {
-            cameraStreamRef.current.getTracks().forEach((track) => track.stop());
-        }
-
         setRecording(false);
+        isDrawingRef.current = false;
+        if (drawIntervalRef.current) {
+            clearInterval(drawIntervalRef.current);
+        }
+    };
+
+    const pauseRecording = () => {
+        if (mediaRecorderRef.current && recording && !paused) {
+            mediaRecorderRef.current.pause();
+        }
+
+        setPaused(prev => !prev);
+    };
+
+    const resumeRecording = () => {
+        if (mediaRecorderRef.current && recording && paused) {
+            mediaRecorderRef.current.resume();
+            setPaused(false);
+        }
     };
 
     const toggleAudioMute = () => {
         const isMuted = !isAudioMuted;
         setIsAudioMuted(isMuted);
 
-        // Mute/unmute audio tracks
-        if (screenStreamRef.current) {
-            screenStreamRef.current.getAudioTracks().forEach(track => {
-                track.enabled = !isMuted;
-            });
-        }
-        if (cameraStreamRef.current) {
-            cameraStreamRef.current.getAudioTracks().forEach(track => {
-                track.enabled = !isMuted;
-            });
-        }
+        screenStreamRef.current?.getAudioTracks().forEach(track => {
+            track.enabled = !isMuted;
+        });
+        cameraStreamRef.current?.getAudioTracks().forEach(track => {
+            track.enabled = !isMuted;
+        });
     };
 
     useEffect(() => {
-        // Cleanup function to stop recording and clean up resources
         return () => {
             stopRecording();
         };
     }, []);
 
     return (
-        <div className="p-4">
-            <h1 className="text-xl font-bold">Screen and Camera Recorder</h1>
-            <div className="mb-4">
-                <button
-                    onClick={() => setMirrorCamera((prev) => !prev)}
-                    className="bg-gray-300 text-black px-4 py-2 rounded mr-2"
-                >
-                    {mirrorCamera ? "Disable Mirror" : "Enable Mirror"}
-                </button>
-                <button
-                    onClick={toggleAudioMute}
-                    className="bg-gray-300 text-black px-4 py-2 rounded mr-2"
-                >
-                    {isAudioMuted ? "Unmute Audio" : "Mute Audio"}
-                </button>
-                {!recording && (
-                    <button onClick={startRecording} className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
-                        Start Recording
-                    </button>
-                )}
-                {recording && (
-                    <button onClick={stopRecording} className="bg-red-500 text-white px-4 py-2 rounded mr-2">
-                        Stop Recording
-                    </button>
-                )}
-                {mediaBlobUrl && (
-                    <a href={mediaBlobUrl} download="merged-recording.webm">
-                        <button className="bg-green-500 text-white px-4 py-2 rounded">
-                            Download Video
-                        </button>
-                    </a>
-                )}
-            </div>
-
-            {/* Canvas to merge screen and camera streams */}
-            <div className="relative">
-                <canvas className="w-full h-auto" ref={canvasRef} />
-            </div>
-
-            {/* Hidden video elements to capture streams */}
-            <video ref={screenVideoRef} style={{ display: "none" }} />
-            <video ref={cameraVideoRef} style={{ display: "none" }} />
-
-            {/* Video Preview of the merged recording */}
-            {mediaBlobUrl && (
-                <div className="mt-4">
-                    <h3 className="text-lg font-semibold">Preview:</h3>
-                    <video src={mediaBlobUrl} controls autoPlay className="w-full" />
+        <div className="bg-background flex flex-wrap justify-center w-full">
+            <section className="flex lg:w-8/12 w-11/12 justify-center py-20 my-20">
+                <div className="flex flex-wrap w-8/12 bg-muted p-2">
+                    <AspectRatio ratio={16 / 9}>
+                        {!recording && (
+                            <video autoPlay autoSave="true" controls src={mediaBlobUrl ?? undefined} className="w-full h-full bg-muted-foreground"></video>
+                        )}
+                        <canvas ref={canvasRef} className={`w-full h-full bg-muted-foreground ${recording ? 'flex' : 'hidden'}`} />
+                        <video ref={screenVideoRef} muted className="hidden"></video>
+                        <video ref={cameraVideoRef} muted className="hidden"></video>
+                    </AspectRatio>
                 </div>
-            )}
+                <div className="flex flex-wrap w-4/12 justify-center border-border bg-background m-2 border">
+                    <div className="flex flex-wrap w-full justify-center items-start h-full gap-1">
+                        <div className="font-bold text-lg uppercase justify-center flex w-11/12">Options</div>
+                        {!recording ?
+                            <>
+                                <ModelSelector onSelectMode={setRecordingType} />
+                                <BitrateSelector defaultValue={videoQuality} setVideoQuality={setVideoQuality} />
+                                <FpsSelector defaultValue={videoFps} setVideoFps={setVideoFps} />
+                                <div className="w-11/12 flex justify-between">
+                                    <Label htmlFor="recorder-mode" className="">Microphone</Label>
+                                    <Switch
+                                        checked={microphoneEnabled}
+                                        onCheckedChange={setMicrophoneEnabled}
+                                    />
+                                </div>
+                                <div className="w-11/12 flex justify-between">
+                                    <Label htmlFor="recorder-mode">Mirror Camera</Label>
+                                    <Switch
+                                        checked={mirrorCamera}
+                                        onCheckedChange={setMirrorCamera}
+                                    />
+                                </div>
+                                <Button className={`w-11/12 ${recording && 'bg-red-600 hover:bg-red-400 text-white'}`} onClick={recording ? stopRecording : startRecording}>{!recording ? "Start" : "Stop"} Recording</Button>
+                            </> :
+                            <>
+                                <div className="w-11/12 flex justify-between">
+                                    <Label htmlFor="recorder-mode" className="">Pause</Label>
+                                    <Switch
+                                        checked={paused}
+                                        onCheckedChange={paused ? resumeRecording : pauseRecording}
+                                    />
+                                </div>
+                                <div className="w-11/12 flex justify-between">
+                                    <Label htmlFor="recorder-mode">Mute</Label>
+                                    <Switch
+                                        checked={isAudioMuted}
+                                        onCheckedChange={toggleAudioMute}
+                                    />
+                                </div>
+                                <Button className={`w-11/12`} onClick={stopRecording}>Download</Button>
+                                <div className="text-lg">10 sec</div>
+                                <Button className={`w-11/12 bg-red-600 hover:bg-red-400 text-white`} onClick={stopRecording}>Stop Recording</Button>
+                            </>}
+                    </div>
+                </div>
+            </section>
         </div>
     );
 };
