@@ -24,6 +24,7 @@ const ScreenRecorder = () => {
 
     const screenStreamRef = useRef<MediaStream | null>(null);
     const cameraStreamRef = useRef<MediaStream | null>(null);
+    const audioStreamRef = useRef<MediaStream | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const chunksRef = useRef<Blob[]>([]);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -35,18 +36,13 @@ const ScreenRecorder = () => {
 
     const startRecording = async () => {
         try {
-            const cameraStream = recordingType.includes("Camera")
-                ? await navigator.mediaDevices.getUserMedia({ video: true, audio: microphoneEnabled ? { sampleRate: 44100 } : false })
-                : null;
-            const screenStream = recordingType.includes("Screen")
-                ? await navigator.mediaDevices.getDisplayMedia({
-                    video: { frameRate: videoFps[0] },
-                    audio: microphoneEnabled ? { sampleRate: 44100 } : false
-                })
-                : null;
+            const audioStream = microphoneEnabled ? await navigator.mediaDevices.getUserMedia({ audio: { sampleRate: 44100 } }) : null;
+            const cameraStream = recordingType.includes("Camera") ? await navigator.mediaDevices.getUserMedia({ video: true }) : null;
+            const screenStream = recordingType.includes("Screen") ? await navigator.mediaDevices.getDisplayMedia({ video: { frameRate: videoFps[0] } }) : null;
 
             screenStreamRef.current = screenStream;
             cameraStreamRef.current = cameraStream;
+            audioStreamRef.current = audioStream;
 
             if (screenVideoRef.current && screenStream) {
                 screenVideoRef.current.srcObject = screenStream;
@@ -124,6 +120,7 @@ const ScreenRecorder = () => {
             const combinedAudioStream = new MediaStream([
                 ...screenStream?.getAudioTracks() || [],
                 ...cameraStream?.getAudioTracks() || [],
+                ...(audioStream?.getAudioTracks() || []),
             ]);
 
             combinedAudioStream.getAudioTracks().forEach((track) => canvasStream.addTrack(track));
@@ -167,6 +164,7 @@ const ScreenRecorder = () => {
 
                 screenStream?.getTracks().forEach(track => track.stop());
                 cameraStream?.getTracks().forEach(track => track.stop());
+                audioStream?.getTracks().forEach(track => track.stop()); // Stop the audio stream
 
                 if (canvasRef.current) {
                     const ctx = canvasRef.current.getContext("2d");
@@ -232,10 +230,7 @@ const ScreenRecorder = () => {
         const isMuted = !isAudioMuted;
         setIsAudioMuted(isMuted);
 
-        screenStreamRef.current?.getAudioTracks().forEach(track => {
-            track.enabled = !isMuted;
-        });
-        cameraStreamRef.current?.getAudioTracks().forEach(track => {
+        audioStreamRef.current?.getAudioTracks().forEach(track => {
             track.enabled = !isMuted;
         });
     };
