@@ -118,7 +118,7 @@ const ScreenRecorder = () => {
             };
 
             isDrawingRef.current = true;
-            drawIntervalRef.current = setInterval(drawVideoStreams, 100);
+            drawIntervalRef.current = setInterval(drawVideoStreams, 10);
 
             const canvasStream: MediaStream = canvas?.captureStream(60) as MediaStream;
             const combinedAudioStream = new MediaStream([
@@ -154,6 +154,7 @@ const ScreenRecorder = () => {
             };
 
             mediaRecorderRef.current.ondataavailable = (e) => {
+                console.log(e, 'e');
                 chunksRef.current.push(e.data);
                 const recordedFileSize = calculateFileSize(chunksRef.current);
                 setRecordedFileSize(recordedFileSize);
@@ -208,15 +209,22 @@ const ScreenRecorder = () => {
     const pauseRecording = () => {
         if (mediaRecorderRef.current && recording && !paused) {
             mediaRecorderRef.current.pause();
+            setPaused(true);
+            if (durationIntervalRef.current) {
+                clearInterval(durationIntervalRef.current);
+            }
         }
-
-        setPaused(prev => !prev);
     };
 
     const resumeRecording = () => {
         if (mediaRecorderRef.current && recording && paused) {
             mediaRecorderRef.current.resume();
             setPaused(false);
+
+            // Resume duration increment
+            durationIntervalRef.current = setInterval(() => {
+                setRecordingDuration(prev => prev + 1);
+            }, 1000);
         }
     };
 
@@ -237,6 +245,20 @@ const ScreenRecorder = () => {
             stopRecording();
         };
     }, []);
+
+    const formatDuration = (durationInSeconds: number) => {
+        const hours = Math.floor(durationInSeconds / 3600);
+        const minutes = Math.floor((durationInSeconds % 3600) / 60);
+        const seconds = durationInSeconds % 60;
+
+        if (hours > 0) {
+            return `${hours}h ${minutes}m ${seconds}s`;
+        } else if (minutes > 0) {
+            return `${minutes}m ${seconds}s`;
+        } else {
+            return `${seconds}s`;
+        }
+    };
 
     return (
         <div className="bg-background flex flex-wrap justify-center w-full">
@@ -291,7 +313,8 @@ const ScreenRecorder = () => {
                                     />
                                 </div>
                                 <Button className={`w-11/12`} onClick={stopRecording}>Download</Button>
-                                <div className="text-lg">10 sec</div>
+                                <div className="text-lg">{recordedFileSize}</div>
+                                <div className="text-lg"> {formatDuration(recordingDuration)}</div>
                                 <Button className={`w-11/12 bg-red-600 hover:bg-red-400 text-white`} onClick={stopRecording}>Stop Recording</Button>
                             </>}
                     </div>

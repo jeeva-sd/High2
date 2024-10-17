@@ -23,8 +23,8 @@ export default function RootLayout({ children }: { children: React.ReactNode; })
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <div className="absolute inset-0 bg-[url(../assets/images/bg/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
                     <MainLayout>
+                        {/* <div className="absolute inset-0 bg-[url(../assets/images/bg/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div> */}
                         {children}
                     </MainLayout>
                 </ThemeProvider>
