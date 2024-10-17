@@ -151,11 +151,9 @@ const ScreenRecorder = () => {
             };
 
             mediaRecorderRef.current.ondataavailable = (e) => {
-                console.log(e, 'e');
                 chunksRef.current.push(e.data);
                 const recordedFileSize = calculateFileSize(chunksRef.current);
                 setRecordedFileSize(recordedFileSize);
-                console.log('Current file size:', recordedFileSize);
             };
 
             mediaRecorderRef.current.onstop = () => {
@@ -235,6 +233,17 @@ const ScreenRecorder = () => {
         });
     };
 
+    const handleDownload = () => {
+        if (mediaBlobUrl) {
+            const a = document.createElement('a');
+            a.href = mediaBlobUrl;
+            a.download = 'recorded-video.webm'; // Specify the file name
+            document.body.appendChild(a); // Append link to the document
+            a.click(); // Programmatically click the link to trigger the download
+            document.body.removeChild(a); // Remove link after downloading
+        }
+    };
+
     useEffect(() => {
         return () => {
             stopRecording();
@@ -290,6 +299,7 @@ const ScreenRecorder = () => {
                                         onCheckedChange={setMirrorCamera}
                                     />
                                 </div>
+                                <button onClick={handleDownload}>Download Video</button>
                                 <Button className={`w-11/12 ${recording && 'bg-red-600 hover:bg-red-400 text-white'}`} onClick={recording ? stopRecording : startRecording}>{!recording ? "Start" : "Stop"} Recording</Button>
                             </> :
                             <>
