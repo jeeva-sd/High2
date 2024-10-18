@@ -8,6 +8,7 @@ import { BitrateSelector } from "./BitrateSelector";
 import { FpsSelector } from "./FpsSelector";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
 import { ModelSelector } from "./model-selector";
+import { Input } from "../ui/input";
 
 const ScreenRecorder = () => {
     const [recording, setRecording] = useState(false);
@@ -21,6 +22,7 @@ const ScreenRecorder = () => {
     const [videoFps, setVideoFps] = useState([30]);
     const [recordingDuration, setRecordingDuration] = useState(0);
     const [recordedFileSize, setRecordedFileSize] = useState('0');
+    const [fileName, setFileName] = useState<string | null>(null);
 
     const screenStreamRef = useRef<MediaStream | null>(null);
     const cameraStreamRef = useRef<MediaStream | null>(null);
@@ -237,7 +239,7 @@ const ScreenRecorder = () => {
         if (mediaBlobUrl) {
             const a = document.createElement('a');
             a.href = mediaBlobUrl;
-            a.download = 'recorded-video.webm'; // Specify the file name
+            a.download = fileName || 'Hightool.net_recording'; // Specify the file name
             document.body.appendChild(a); // Append link to the document
             a.click(); // Programmatically click the link to trigger the download
             document.body.removeChild(a); // Remove link after downloading
@@ -264,6 +266,8 @@ const ScreenRecorder = () => {
         }
     };
 
+    const clearToStart = () => { };
+
     return (
         <div className="bg-background flex flex-wrap justify-center w-full">
             <section className="flex lg:w-8/12 w-11/12 justify-center py-20 my-20">
@@ -278,9 +282,9 @@ const ScreenRecorder = () => {
                     </AspectRatio>
                 </div>
                 <div className="flex flex-wrap w-4/12 justify-center border-border bg-background m-2 border">
-                    <div className="flex flex-wrap w-full justify-center items-start h-full gap-1">
+                    <div className="flex flex-wrap w-full justify-center items-start h-full gap-1 py-5">
                         <div className="font-bold text-lg uppercase justify-center flex w-11/12">Options</div>
-                        {!recording ?
+                        {(!recording && !mediaBlobUrl) ?
                             <>
                                 <ModelSelector onSelectMode={setRecordingType} />
                                 <BitrateSelector defaultValue={videoQuality} setVideoQuality={setVideoQuality} />
@@ -299,28 +303,45 @@ const ScreenRecorder = () => {
                                         onCheckedChange={setMirrorCamera}
                                     />
                                 </div>
-                                <button onClick={handleDownload}>Download Video</button>
-                                <Button className={`w-11/12 ${recording && 'bg-red-600 hover:bg-red-400 text-white'}`} onClick={recording ? stopRecording : startRecording}>{!recording ? "Start" : "Stop"} Recording</Button>
+                                <Button className="w-11/12" onClick={startRecording}>Start Recording</Button>
                             </> :
                             <>
-                                <div className="w-11/12 flex justify-between">
-                                    <Label htmlFor="recorder-mode" className="">Pause</Label>
+                                <div className={`w-11/12 flex justify-between ${!recording ? "cursor-not-allowed" : "cursor-pointer"}`} onClick={paused ? resumeRecording : pauseRecording}>
+                                    <Label htmlFor="recorder-mode" className="select-none">Pause</Label>
                                     <Switch
+                                        disabled={!recording}
                                         checked={paused}
                                         onCheckedChange={paused ? resumeRecording : pauseRecording}
                                     />
                                 </div>
-                                <div className="w-11/12 flex justify-between">
-                                    <Label htmlFor="recorder-mode">Mute</Label>
+                                <div className="w-11/12 flex justify-between cursor-pointer" onClick={toggleAudioMute}>
+                                    <Label className="select-none">Mute</Label>
                                     <Switch
+                                        id="mute-switch"
                                         checked={isAudioMuted}
                                         onCheckedChange={toggleAudioMute}
                                     />
                                 </div>
-                                <Button className={`w-11/12`} onClick={stopRecording}>Download</Button>
-                                <div className="text-lg">{recordedFileSize}</div>
-                                <div className="text-lg"> {formatDuration(recordingDuration)}</div>
-                                <Button className={`w-11/12 bg-red-600 hover:bg-red-400 text-white`} onClick={stopRecording}>Stop Recording</Button>
+                                <div className="w-11/12 flex justify-between cursor-pointer">
+                                    <Label className="select-none">Mirror Camera</Label>
+                                    <Switch
+                                        id="mute-switch"
+                                        disabled
+                                    />
+                                </div>
+                                <div className="w-11/12 flex justify-between cursor-pointer select-none">
+                                    <Label className="select-none">File size</Label>
+                                    {recordedFileSize}
+                                </div>
+                                <div className="w-11/12 flex justify-between cursor-pointer select-none">
+                                    <Label className="select-none">Record duration</Label>
+                                    {formatDuration(recordingDuration)}
+                                </div>
+                                <Button className={`w-11/12 ${recording ? 'bg-destructive text-destructive-foreground hover:bg-destructive/80' : 'bg-chart-2 text-destructive-foreground'}`} onClick={recording ? stopRecording : clearToStart}>{recording ? "Stop" : "New"} Recording</Button>
+                                <div className="flex flex-wrap w-11/12 gap-3 border-t pt-5 border-border border-dashed">
+                                    <Input className="w-full" onChange={e => setFileName(e.target.value)} value={fileName || ''} placeholder="Export file name (optional)" />
+                                    <Button disabled={!mediaBlobUrl} className={`w-full select-none`} onClick={handleDownload}>Download</Button>
+                                </div>
                             </>}
                     </div>
                 </div>
