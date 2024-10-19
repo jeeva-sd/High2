@@ -42,7 +42,7 @@ export const ModelSelector: React.FC<ScreenRecorderModeSelectorProps> = ({
   };
 
   return (
-    <div className="flex flex-col w-11/12 gap-1">
+    <div className="flex flex-col w-11/12 gap-1 p-2">
       <Label htmlFor="recorder-mode pb-5">Record</Label>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>

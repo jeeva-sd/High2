@@ -22,7 +22,7 @@ export function BitrateSelector({
 }: BitrateSelectorProps) {
 
     return (
-        <div className="grid gap-2 pt-2 w-11/12">
+        <div className="grid gap-2 hover:bg-muted p-2 transition-all w-11/12">
             <HoverCard openDelay={100} closeDelay={0}>
                 <HoverCardTrigger asChild>
                     <div className="grid gap-4">

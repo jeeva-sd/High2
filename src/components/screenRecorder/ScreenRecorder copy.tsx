@@ -8,7 +8,6 @@ import { BitrateSelector } from "./BitrateSelector";
 import { FpsSelector } from "./FpsSelector";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
 import { ModelSelector } from "./model-selector";
-import { Input } from "../ui/input";
 
 const ScreenRecorder = () => {
     const [recording, setRecording] = useState(false);
@@ -22,7 +21,11 @@ const ScreenRecorder = () => {
     const [videoFps, setVideoFps] = useState([30]);
     const [recordingDuration, setRecordingDuration] = useState(0);
     const [recordedFileSize, setRecordedFileSize] = useState('0');
-    const [fileName, setFileName] = useState<string | null>(null);
+
+    // State for camera overlay position
+    const [cameraOverlayPosition, setCameraOverlayPosition] = useState({ x: 0, y: 0 });
+    const [isDragging, setIsDragging] = useState(false);
+    const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
     const screenStreamRef = useRef<MediaStream | null>(null);
     const cameraStreamRef = useRef<MediaStream | null>(null);
@@ -67,58 +70,58 @@ const ScreenRecorder = () => {
                 canvas.height = screenSettings?.height || 1080;
             }
 
-            const drawVideoStreams = () => {
-                if (!isDrawingRef.current) return;
+            // const drawVideoStreams = () => {
+            //     if (!isDrawingRef.current) return;
 
-                if (canvas && canvasContext && cameraVideoRef.current) {
-                    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+            //     if (canvas && canvasContext && cameraVideoRef.current) {
+            //         canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
-                    // If screenStream exists, draw it on the canvas
-                    if (screenStream && screenVideoRef.current) {
-                        canvasContext.drawImage(screenVideoRef.current, 0, 0, canvas.width, canvas.height);
+            //         // If screenStream exists, draw it on the canvas
+            //         if (screenStream && screenVideoRef.current) {
+            //             canvasContext.drawImage(screenVideoRef.current, 0, 0, canvas.width, canvas.height);
 
-                        // Draw the camera stream in a smaller position
-                        const cameraSize = 240;
-                        const cameraX = canvas.width - cameraSize - 20;
-                        const cameraY = canvas.height - cameraSize - 20;
-                        const radius = cameraSize / 2;
+            //             // Draw the camera stream in a smaller position
+            //             const cameraSize = 240;
+            //             const cameraX = canvas.width - cameraSize - 20;
+            //             const cameraY = canvas.height - cameraSize - 20;
+            //             const radius = cameraSize / 2;
 
-                        canvasContext.save();
-                        canvasContext.beginPath();
-                        canvasContext.arc(cameraX + radius, cameraY + radius, radius, 0, Math.PI * 2);
-                        canvasContext.clip();
+            //             canvasContext.save();
+            //             canvasContext.beginPath();
+            //             canvasContext.arc(cameraX + radius, cameraY + radius, radius, 0, Math.PI * 2);
+            //             canvasContext.clip();
 
-                        if (mirrorCamera) {
-                            canvasContext.translate(cameraX + cameraSize, cameraY);
-                            canvasContext.scale(-1, 1);
-                            canvasContext.drawImage(cameraVideoRef.current, 0, 0, cameraSize, cameraSize);
-                            canvasContext.scale(-1, 1);
-                            canvasContext.translate(-(cameraX + cameraSize), -cameraY);
-                        } else {
-                            canvasContext.drawImage(cameraVideoRef.current, cameraX, cameraY, cameraSize, cameraSize);
-                        }
+            //             if (mirrorCamera) {
+            //                 canvasContext.translate(cameraX + cameraSize, cameraY);
+            //                 canvasContext.scale(-1, 1);
+            //                 canvasContext.drawImage(cameraVideoRef.current, 0, 0, cameraSize, cameraSize);
+            //                 canvasContext.scale(-1, 1);
+            //                 canvasContext.translate(-(cameraX + cameraSize), -cameraY);
+            //             } else {
+            //                 canvasContext.drawImage(cameraVideoRef.current, cameraX, cameraY, cameraSize, cameraSize);
+            //             }
 
-                        canvasContext.restore();
-                    }
-                    // If only the camera is recording, show it full-screen
-                    else if (cameraStream) {
-                        if (mirrorCamera) {
-                            canvasContext.translate(canvas.width, 0);
-                            canvasContext.scale(-1, 1);
-                            canvasContext.drawImage(cameraVideoRef.current, 0, 0, canvas.width, canvas.height);
-                            canvasContext.scale(-1, 1);
-                            canvasContext.translate(-canvas.width, 0);
-                        } else {
-                            canvasContext.drawImage(cameraVideoRef.current, 0, 0, canvas.width, canvas.height);
-                        }
-                    }
-                }
-            };
+            //             canvasContext.restore();
+            //         }
+            //         // If only the camera is recording, show it full-screen
+            //         else if (cameraStream) {
+            //             if (mirrorCamera) {
+            //                 canvasContext.translate(canvas.width, 0);
+            //                 canvasContext.scale(-1, 1);
+            //                 canvasContext.drawImage(cameraVideoRef.current, 0, 0, canvas.width, canvas.height);
+            //                 canvasContext.scale(-1, 1);
+            //                 canvasContext.translate(-canvas.width, 0);
+            //             } else {
+            //                 canvasContext.drawImage(cameraVideoRef.current, 0, 0, canvas.width, canvas.height);
+            //             }
+            //         }
+            //     }
+            // };
 
             isDrawingRef.current = true;
             drawIntervalRef.current = setInterval(drawVideoStreams, 10);
 
-            const canvasStream: MediaStream = canvas?.captureStream(videoFps[0]) as MediaStream;
+            const canvasStream: MediaStream = canvas?.captureStream(60) as MediaStream;
             const combinedAudioStream = new MediaStream([
                 ...screenStream?.getAudioTracks() || [],
                 ...cameraStream?.getAudioTracks() || [],
@@ -142,13 +145,13 @@ const ScreenRecorder = () => {
                 const totalSize = blob.size;
 
                 if (totalSize < 1024) {
-                    return `${totalSize} bytes`;
+                    return ${totalSize} bytes;
                 } else if (totalSize < 1024 * 1024) {
-                    return `${(totalSize / 1024).toFixed(2)} KB`;
+                    return ${(totalSize / 1024).toFixed(2)} KB;
                 } else if (totalSize < 1024 * 1024 * 1024) {
-                    return `${(totalSize / (1024 * 1024)).toFixed(2)} MB`;
+                    return ${(totalSize / (1024 * 1024)).toFixed(2)} MB;
                 } else {
-                    return `${(totalSize / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+                    return ${(totalSize / (1024 * 1024 * 1024)).toFixed(2)} GB;
                 }
             };
 
@@ -239,10 +242,10 @@ const ScreenRecorder = () => {
         if (mediaBlobUrl) {
             const a = document.createElement('a');
             a.href = mediaBlobUrl;
-            a.download = fileName || 'Hightool.net_recording';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            a.download = 'recorded-video.webm'; // Specify the file name
+            document.body.appendChild(a); // Append link to the document
+            a.click(); // Programmatically click the link to trigger the download
+            document.body.removeChild(a); // Remove link after downloading
         }
     };
 
@@ -258,124 +261,172 @@ const ScreenRecorder = () => {
         const seconds = durationInSeconds % 60;
 
         if (hours > 0) {
-            return `${hours}h ${minutes}m ${seconds}s`;
+            return ${hours}h ${minutes}m ${seconds}s;
         } else if (minutes > 0) {
-            return `${minutes}m ${seconds}s`;
+            return ${minutes}m ${seconds}s;
         } else {
-            return `${seconds}s`;
+            return ${seconds}s;
         }
     };
 
-    const clearToStart = () => {
-        // Reset all recording states to default
-        setRecording(false);
-        setPaused(false);
-        setMediaBlobUrl(null);
-        setMirrorCamera(false);
-        setMicrophoneEnabled(false);
-        setIsAudioMuted(false);
-        setRecordingType("Screen");
-        setVideoQuality([4]);
-        setVideoFps([30]);
-        setRecordingDuration(0);
-        setRecordedFileSize('0');
-        setFileName(null);
+    const handleMouseDown = (e: React.MouseEvent) => {
+        setIsDragging(true);
+        const offsetX = e.clientX - cameraOverlayPosition.x;
+        const offsetY = e.clientY - cameraOverlayPosition.y;
+        setDragOffset({ x: offsetX, y: offsetY });
+    };
 
-        // Stop any ongoing streams and clear the canvas
-        screenStreamRef.current?.getTracks().forEach(track => track.stop());
-        cameraStreamRef.current?.getTracks().forEach(track => track.stop());
-        audioStreamRef.current?.getTracks().forEach(track => track.stop());
-
-        if (canvasRef.current) {
-            const ctx = canvasRef.current.getContext("2d");
-            ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    const handleMouseMove = (e: MouseEvent) => {
+        if (isDragging) {
+            const newX = e.clientX - dragOffset.x;
+            const newY = e.clientY - dragOffset.y;
+            setCameraOverlayPosition({ x: newX, y: newY });
         }
+    };
 
-        isDrawingRef.current = false;
-        if (drawIntervalRef.current) {
-            clearInterval(drawIntervalRef.current);
-        }
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
 
-        if (durationIntervalRef.current) {
-            clearInterval(durationIntervalRef.current);
+    useEffect(() => {
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+        };
+    }, [isDragging]);
+
+    // useEffect(() => {
+    //     if (recording) {
+    //         drawVideoStreams(); // Draw immediately when recording starts
+
+    //         drawIntervalRef.current = setInterval(() => {
+    //             drawVideoStreams();
+    //         }, 1000 / videoFps[0]); // Adjust the drawing rate according to fps
+
+    //         // Clear the interval when recording stops or component unmounts
+    //         return () => {
+    //             // clearInterval(drawIntervalRef.current);
+    //         };
+    //     }
+    // }, [recording, cameraOverlayPosition, mirrorCamera, videoFps]); // Re-run when these states change
+
+    const drawVideoStreams = () => {
+        const canvas = canvasRef.current;
+        const canvasContext = canvas?.getContext("2d");
+
+        if (canvas && canvasContext && cameraVideoRef.current) {
+            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+
+            // If screenStream exists, draw it on the canvas
+            if (screenStreamRef && screenVideoRef.current) {
+                canvasContext.drawImage(screenVideoRef.current, 0, 0, canvas.width, canvas.height);
+
+                // Draw the camera stream in a smaller position based on cameraOverlayPosition
+                const cameraSize = 240;
+                const radius = cameraSize / 2;
+
+                canvasContext.save();
+                canvasContext.beginPath();
+                canvasContext.arc(cameraOverlayPosition.x + radius, cameraOverlayPosition.y + radius, radius, 0, Math.PI * 2);
+                canvasContext.clip();
+
+                if (mirrorCamera) {
+                    canvasContext.translate(cameraOverlayPosition.x + cameraSize, cameraOverlayPosition.y);
+                    canvasContext.scale(-1, 1);
+                    canvasContext.drawImage(cameraVideoRef.current, 0, 0, cameraSize, cameraSize);
+                    canvasContext.scale(-1, 1);
+                    canvasContext.translate(-(cameraOverlayPosition.x + cameraSize), -cameraOverlayPosition.y);
+                } else {
+                    canvasContext.drawImage(cameraVideoRef.current, cameraOverlayPosition.x, cameraOverlayPosition.y, cameraSize, cameraSize);
+                }
+
+                canvasContext.restore();
+            }
+            // If only the camera is recording, show it full-screen
+            else if (cameraStreamRef) {
+                if (mirrorCamera) {
+                    canvasContext.translate(canvas.width, 0);
+                    canvasContext.scale(-1, 1);
+                    canvasContext.drawImage(cameraVideoRef.current, 0, 0, canvas.width, canvas.height);
+                    canvasContext.scale(-1, 1);
+                    canvasContext.translate(-canvas.width, 0);
+                } else {
+                    canvasContext.drawImage(cameraVideoRef.current, 0, 0, canvas.width, canvas.height);
+                }
+            }
         }
     };
 
     return (
         <div className="bg-background flex flex-wrap justify-center w-full">
-            <section className="flex gap-2 lg:w-8/12 w-11/12 justify-center py-20 my-20">
+            <section className="flex lg:w-8/12 w-11/12 justify-center py-20 my-20">
                 <div className="flex flex-wrap w-8/12 bg-muted p-2">
                     <AspectRatio ratio={16 / 9}>
                         {!recording && (
                             <video autoPlay autoSave="true" controls src={mediaBlobUrl ?? undefined} className="w-full h-full bg-muted-foreground"></video>
                         )}
-                        <canvas ref={canvasRef} className={`w-full h-full bg-muted-foreground ${recording ? 'flex' : 'hidden'}`} />
+                        <canvas
+                            ref={canvasRef}
+                            className={w-full h-full bg-muted-foreground ${recording ? 'flex' : 'hidden'}}
+                        />
                         <video ref={screenVideoRef} muted className="hidden"></video>
                         <video ref={cameraVideoRef} muted className="hidden"></video>
+                        {recording && (
+                            <div
+                                className="absolute cursor-move"
+                                style={{
+                                    left: ${cameraOverlayPosition.x}px,
+                                    top: ${cameraOverlayPosition.y}px,
+                                    width: '240px',
+                                    height: '240px',
+                                }}
+                                onMouseDown={handleMouseDown}
+                            >
+                                <div className="w-full h-full rounded-full border-2 border-blue-500"></div> {/* Camera overlay */}
+                            </div>
+                        )}
                     </AspectRatio>
                 </div>
-                <div className="flex flex-wrap w-4/12 justify-center border-border bg-background p-2 border">
-                    <div className="flex flex-wrap w-full justify-center items-start h-full gap-1 py-5">
+                <div className="flex flex-wrap w-4/12 justify-center border-border bg-background m-2 border">
+                    <div className="flex flex-wrap w-full justify-center items-start h-full gap-1">
                         <div className="font-bold text-lg uppercase justify-center flex w-11/12">Options</div>
-                        {(!recording && !mediaBlobUrl && false) ?
+                        {!recording ?
                             <>
                                 <ModelSelector onSelectMode={setRecordingType} />
                                 <BitrateSelector defaultValue={videoQuality} setVideoQuality={setVideoQuality} />
                                 <FpsSelector defaultValue={videoFps} setVideoFps={setVideoFps} />
-                                <div className="w-11/12 flex justify-between hover:bg-muted p-2 transition-all select-none cursor-pointer" onClick={() => setMicrophoneEnabled(prev => !prev)}>
+                                <div className="w-11/12 flex justify-between">
                                     <Label htmlFor="recorder-mode" className="">Microphone</Label>
                                     <Switch
                                         checked={microphoneEnabled}
                                         onCheckedChange={setMicrophoneEnabled}
                                     />
                                 </div>
-                                <div className="w-11/12 flex justify-between hover:bg-muted p-2 transition-all select-none cursor-pointer" onClick={() => setMirrorCamera(prev => !prev)}>
+                                <div className="w-11/12 flex justify-between">
                                     <Label htmlFor="recorder-mode">Mirror Camera</Label>
                                     <Switch
                                         checked={mirrorCamera}
                                         onCheckedChange={setMirrorCamera}
                                     />
                                 </div>
-                                <Button className="w-11/12" onClick={startRecording}>Start Recording</Button>
-                            </> :
+                                <button onClick={handleDownload}>Download Video</button>
+                                <Button className={w-11/12 ${recording && 'bg-red-600 hover:bg-red-400 text-white'}} onClick={recording ? stopRecording : startRecording}>
+                                    {recording ? "Stop Recording" : "Start Recording"}
+                                </Button>
+                            </>
+                            :
                             <>
-                                <div className={`w-11/12 flex justify-between hover:bg-muted p-2 transition-all ${!recording ? "cursor-not-allowed" : "cursor-pointer"}`} onClick={paused ? resumeRecording : pauseRecording}>
-                                    <Label htmlFor="recorder-mode" className="select-none">Pause</Label>
-                                    <Switch
-                                        disabled={!recording}
-                                        checked={paused}
-                                        onCheckedChange={paused ? resumeRecording : pauseRecording}
-                                    />
-                                </div>
-                                <div className="w-11/12 flex justify-between hover:bg-muted p-2 transition-all select-none cursor-pointer" onClick={toggleAudioMute}>
-                                    <Label className="select-none">Mute</Label>
-                                    <Switch
-                                        id="mute-switch"
-                                        checked={isAudioMuted}
-                                        onCheckedChange={toggleAudioMute}
-                                    />
-                                </div>
-                                <div className="w-11/12 flex justify-between hover:bg-muted p-2 transition-all select-none cursor-pointer">
-                                    <Label className="select-none">Mirror Camera</Label>
-                                    <Switch
-                                        id="mute-switch"
-                                        disabled
-                                    />
-                                </div>
-                                <div className="w-11/12 flex justify-between hover:bg-muted p-2 transition-all">
-                                    <Label className="select-none">File size</Label>
-                                    {recordedFileSize}
-                                </div>
-                                <div className="w-11/12 flex justify-between hover:bg-muted p-2 transition-all">
-                                    <Label className="select-none">Record duration</Label>
-                                    {formatDuration(recordingDuration)}
-                                </div>
-                                <Button className={`w-11/12 ${recording ? 'bg-destructive text-destructive-foreground hover:bg-destructive/80' : 'bg-chart-2 text-destructive-foreground'}`} onClick={recording ? stopRecording : clearToStart}>{recording ? "Stop" : "New"} Recording</Button>
-                                <div className="flex flex-wrap w-11/12 gap-3 border-t pt-5 border-border border-dashed">
-                                    <Input className="w-full" onChange={e => setFileName(e.target.value)} value={fileName || ''} placeholder="Export file name (optional)" />
-                                    <Button disabled={!mediaBlobUrl} className={`w-full select-none`} onClick={handleDownload}>Download</Button>
-                                </div>
-                            </>}
+                                <Button className={w-11/12 bg-yellow-500} onClick={isAudioMuted ? toggleAudioMute : toggleAudioMute}>
+                                    {isAudioMuted ? "Unmute" : "Mute"} Audio
+                                </Button>
+                                <Button className={w-11/12 bg-blue-500} onClick={paused ? resumeRecording : pauseRecording}>
+                                    {paused ? "Resume" : "Pause"}
+                                </Button>
+                            </>
+                        }
                     </div>
                 </div>
             </section>

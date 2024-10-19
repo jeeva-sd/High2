@@ -22,7 +22,7 @@ export function FpsSelector({
 }: FpsSelectorProps) {
 
   return (
-    <div className="grid gap-2 pt-2 w-11/12">
+    <div className="grid gap-2 hover:bg-muted p-2 w-11/12">
       <HoverCard openDelay={200}>
         <HoverCardTrigger asChild>
           <div className="grid gap-4">
