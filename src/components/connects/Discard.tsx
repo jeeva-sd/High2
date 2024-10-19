@@ -13,7 +13,7 @@ const DiscardConnect = () => {
                 </p>
 
                 <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-                    <button className="flex text-sm gap-2 items-center py-2 font-mono text-center text-primary hover:underline hover:text-primary/80">
+                    <button className="flex text-sm gap-2 items-center py-2 font-mono text-center text-accent-foreground hover:underline hover:text-primary/80">
                         Connect now
                         <FaArrowRightLong />
                     </button>

@@ -302,8 +302,8 @@ const ScreenRecorder = () => {
     };
 
     return (
-        <div className="bg-background flex flex-wrap justify-center w-full">
-            <section className="flex gap-2 lg:w-8/12 w-11/12 justify-center py-20 my-20">
+        <div className="bg-background flex flex-wrap justify-center w-full mb-20">
+            <section className="flex gap-2 lg:w-8/12 w-11/12 justify-center">
                 <div className="flex flex-wrap w-8/12 bg-muted p-2">
                     <AspectRatio ratio={16 / 9}>
                         {!recording && (
@@ -317,7 +317,7 @@ const ScreenRecorder = () => {
                 <div className="flex flex-wrap w-4/12 justify-center border-border bg-background p-2 border">
                     <div className="flex flex-wrap w-full justify-center items-start h-full gap-1 py-5">
                         <div className="font-bold text-lg uppercase justify-center flex w-11/12">Options</div>
-                        {(!recording && !mediaBlobUrl && false) ?
+                        {(!recording && !mediaBlobUrl) ?
                             <>
                                 <ModelSelector onSelectMode={setRecordingType} />
                                 <BitrateSelector defaultValue={videoQuality} setVideoQuality={setVideoQuality} />
